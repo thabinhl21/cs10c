@@ -112,6 +112,7 @@ int main()
                         cout << "\"" << temp->GetSongName() << "\"" << " removed" << endl;
                         prev->SetNext(temp->GetNext());
                         delete temp;
+                        break;
                     }
                     else
                     {
@@ -203,9 +204,9 @@ int main()
                 {
                     tail = prevSong;
                 }
-                else if (songToMove == tail)
+                else if (songToMove == head)
                 {
-                    tail = prevSong;
+                    head = head->GetNext();
                 }
                 songToMove->InsertAfter(songBefore);
             }
@@ -226,11 +227,8 @@ int main()
 
                 while (temp != nullptr)
                 {
-                    cout << songNum << endl;
-                    cout << "Unique ID: " << temp->GetID() << endl;
-                    cout << "Song Name: " << temp->GetSongName() << endl;
-                    cout << "Artist Name: " << temp->GetArtistName() << endl;
-                    cout << "Song Length (in seconds): " << temp->GetSongLength() << endl;
+                    cout << songNum << "." << endl;
+                    temp->PrintPlaylistNode();
                     if (temp != tail)
                     {
                         cout << endl;
