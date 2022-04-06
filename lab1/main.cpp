@@ -248,9 +248,9 @@ int main()
             cout << endl;
             cout << "OUTPUT SONGS BY SPECIFIC ARTIST" << endl;
             cout << "Enter artist's name:" << endl;
+            cin.ignore();
             getline(cin,artistName);
             //cin >> artistName;
-            cin.ignore();
             //cout << artistName;
             cout << endl;
             
