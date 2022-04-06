@@ -30,23 +30,20 @@ int main()
             cout << "ADD SONG" << endl;
             cout << "Enter song's unique ID:" << endl;
             cin >> ID;
-            cout << endl;
 
-            cin.ignore(); //not sure why, but this fixed something...
+            cin.ignore(); //ignore endline at end of previous cout statement
             cout << "Enter song's name:" << endl;
             getline (cin, songName);
-            cout << endl;
 
             cout << "Enter artist's name:" << endl;
             getline (cin, artistName);
-            cout << endl;
 
             cout << "Enter song's length (in seconds):" << endl;
             cin >> length;
 
             PlaylistNode* addedSong = new PlaylistNode(ID, songName, artistName, length);
 
-            if (head == nullptr)
+            if (head == nullptr) //if list is empty, point head and tail to new song
             {
                 head = addedSong;
                 tail = addedSong;
@@ -67,20 +64,19 @@ int main()
             cout << "Enter song's unique ID:" << endl;
             string ID;
             cin >> ID;
-            cout << endl;
 
             if (head->GetID() == ID) //if deleting head
             {
                 if (head == tail) //if only one song
                 {
-                    cout << "\"" << head->GetSongName() << "\"" << " removed" << endl;
+                    cout << "\"" << head->GetSongName() << "\"" << " removed." << endl;
                     delete head;
                     head = nullptr;
                     tail = nullptr;
                 }
                 else
                 {
-                    cout << "\"" << head->GetSongName() << "\"" << " removed" << endl;
+                    cout << "\"" << head->GetSongName() << "\"" << " removed." << endl;
                     PlaylistNode* temp = head;
                     head = head->GetNext();
                     delete temp;
@@ -89,13 +85,13 @@ int main()
 
             else if (tail->GetID() == ID) //if deleting tail
             {
-                cout << "\"" << tail->GetSongName() << "\"" << " removed" << endl;
+                cout << "\"" << tail->GetSongName() << "\"" << " removed." << endl;
                 PlaylistNode* temp = head;
-                while (temp->GetNext() != tail)
+                while (temp->GetNext() != tail) //get to node before tail
                 {
                     temp = temp->GetNext();
                 }
-                temp->SetNext(tail->GetNext());
+                temp->SetNext(tail->GetNext()); //set second-to-last node's next pointer to nullptr
                 delete tail;
                 tail = temp;
             }
@@ -109,10 +105,10 @@ int main()
                 {
                     if (temp->GetID() == ID)
                     {
-                        cout << "\"" << temp->GetSongName() << "\"" << " removed" << endl;
+                        cout << "\"" << temp->GetSongName() << "\"" << " removed." << endl;
                         prev->SetNext(temp->GetNext());
                         delete temp;
-                        break;
+                        break; //need to break out of loop or it will continue until tail
                     }
                     else
                     {
@@ -132,14 +128,13 @@ int main()
             cout << "Enter song's current position:" << endl;
             int songPos;
             cin >> songPos;
-            cout << endl;
+
             cout << "Enter new position for song:" << endl;
             int newPos;
             cin >> newPos;
 
             //find song being moved
             PlaylistNode* songToMove = head;
-
             int i = 1;
 
             while (i != songPos)
@@ -147,12 +142,11 @@ int main()
                 songToMove = songToMove->GetNext();
                 ++i;
             }
-            cout << "song to move finished" << endl;
 
+            //find song before song being moved
             PlaylistNode* prevSong = head;
             int j = 1;
-            //find song before song being moved
-            if (songPos > 1) //if song is not first in list
+            if (songPos > 1) //if song is not first in list (there is no node before node 1)
             {
                 while (j != songPos - 1)
                 {  
@@ -160,12 +154,11 @@ int main()
                     ++j;
                 }
             }
-            cout << "prevsong finished" << endl;
 
             //find song before new position
             PlaylistNode* songBefore = head;
             j = 1;
-            if (newPos > 1) //if song is not first in list
+            if (newPos > 1) //if song is not first in list (there is no node before node 1)
             {
                 while (j != newPos - 1)
                 {
@@ -173,9 +166,8 @@ int main()
                     ++j;
                 }
             }
-            cout << "songbefore finished" << endl;
 
-            
+            // CODE FOR MOVING NODE STARTS HERE
             if (newPos <= 1) //move song to head
             {
                 if (songToMove == tail)
@@ -188,41 +180,57 @@ int main()
                 head = songToMove;
             }
 
-            //working?
-            else if (newPos >= numOfSongs) //move node to tail
+            else if (newPos >= numOfSongs) //move song to tail
             {
                 if (songToMove == head)
                 {
                     head = head->GetNext();
                 }
+                prevSong->SetNext(songToMove->GetNext());
                 songToMove->InsertAfter(tail);
                 tail = songToMove;
             }
 
-            else
+            else //if not moving song to head or tail
             {
                 if (songToMove == tail)
                 {
                     tail = prevSong;
+                    prevSong->SetNext(songToMove->GetNext());
+                    songToMove->InsertAfter(songBefore);
                 }
                 else if (songToMove == head)
                 {
                     head = head->GetNext();
+                    songToMove->InsertAfter(songBefore->GetNext()); 
                 }
-                songToMove->InsertAfter(songBefore);
+                else
+                {
+                    if (songPos > newPos) //if moving down the list - like moving tail
+                    {
+                        prevSong->SetNext(songToMove->GetNext());
+                        songToMove->InsertAfter(songBefore);
+                    }
+                    else //moving up the list - like moving head
+                    {
+                        prevSong->SetNext(songToMove->GetNext());
+                        songToMove->InsertAfter(songBefore->GetNext());
+                    }
+                }
             }
+            cout << "\"" << songToMove->GetSongName() << "\"" << " moved to position " << newPos << endl;
         }
 
         if (userInput == 'o')
         {
             cout << endl;
+            cout << playlistTitle << " - OUTPUT FULL PLAYLIST" << endl;
             if (head == nullptr)
             {
                 cout << "Playlist is empty" << endl;
             }
             else
             {
-                cout << playlistTitle << " - OUTPUT FULL PLAYLIST" << endl;
                 PlaylistNode* temp = head;
                 int songNum = 1;
 
@@ -249,8 +257,6 @@ int main()
             cout << "Enter artist's name:" << endl;
             cin.ignore();
             getline(cin,artistName);
-            //cin >> artistName;
-            //cout << artistName;
             cout << endl;
             
             PlaylistNode* curr = head;
@@ -258,6 +264,7 @@ int main()
                 if (curr->GetArtistName() == artistName) {
                     cout << artistPos << "." << endl;
                     curr->PrintPlaylistNode();
+                    cout << endl;
                 }
                 artistPos += 1;
                 curr = curr->GetNext();
