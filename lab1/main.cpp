@@ -6,7 +6,7 @@ void PrintMenu(string);
 
 int main()
 {
-    cout << "Enter playlist's title: " << endl;
+    cout << "Enter playlist's title:" << endl;
     string playlistTitle;
     getline (cin, playlistTitle);
     PrintMenu(playlistTitle);
@@ -302,5 +302,5 @@ void PrintMenu(string playlistTitle)
     cout << "o - Output full playlist" << endl;
     cout << "q - Quit" << endl;
     cout << endl;
-    cout << "Choose an option: " << endl;
+    cout << "Choose an option:" << endl;
 }
