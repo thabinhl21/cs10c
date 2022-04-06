@@ -20,3 +20,27 @@ IntList::~IntList() {
     }
 }
 
+void IntList::push_front(int value) {
+    IntNode *n;
+    n = new IntNode(value);
+
+    // if list is empty
+    if (dummyHead == nullptr) {
+        dummyHead->next = n;
+        dummyTail->prev = n;
+        n->next = dummyTail;
+        n->prev = dummyHead;
+    }
+
+    // if only 1 element in list
+    else if (dummyHead == dummyTail) {
+        dummyHead->prev = n;
+        n->next = dummyHead;
+        dummyHead->next = dummyTail;
+    }
+    
+    else {
+        n->next = dummyHead;
+        dummyHead = n;
+    }
+}
