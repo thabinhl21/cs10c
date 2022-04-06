@@ -21,8 +21,8 @@ PlaylistNode::PlaylistNode(string uniqueID, string songName, string artistName, 
 //between two existing nodes
 void PlaylistNode::InsertAfter(PlaylistNode* afterThis)
 {
-    this->SetNext(afterThis->nextNodePtr);
-    afterThis->SetNext(this);
+    this->nextNodePtr = afterThis->GetNext();
+    afterThis->nextNodePtr = this;
 }
 
 //set next pointer
