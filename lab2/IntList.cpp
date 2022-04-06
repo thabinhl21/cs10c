@@ -9,3 +9,14 @@ IntList::IntList() {
     dummyTail->prev = dummyHead;
     dummyTail->next = nullptr;
 }
+
+IntList::~IntList() {
+    
+    while (dummyHead != nullptr) {
+        IntNode* temp;
+        temp = dummyHead;
+        dummyHead = dummyHead->next;
+        delete temp;
+    }
+}
+
