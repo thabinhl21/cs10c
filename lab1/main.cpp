@@ -188,6 +188,7 @@ int main()
                 head = songToMove;
             }
 
+            //working?
             else if (newPos >= numOfSongs) //move node to tail
             {
                 if (songToMove == head)
