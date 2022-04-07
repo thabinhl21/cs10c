@@ -66,10 +66,8 @@ void IntList::push_back(int value)
 
 void IntList::pop_back() {
     
-    if (!empty())
-    {
+    if (!empty()) {
         IntNode* temp = dummyTail->prev;
-        temp = dummyTail->prev;
         temp->prev->next = dummyTail;
         dummyTail->prev = temp->prev;
         delete temp;
