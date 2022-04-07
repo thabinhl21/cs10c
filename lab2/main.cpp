@@ -70,6 +70,7 @@ int main () {
     cout << "testing printReverse" << endl;
     testList.printReverse();
     cout << endl;
+    cout << endl;
 
     //pop_back()
     cout << "testing pop_back()" << endl;
