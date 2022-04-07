@@ -52,21 +52,24 @@ void IntList::push_front(int value) {
 void IntList::pop_front()
 {
 
-    //if only 1 element in list
-    if (dummyHead == dummyTail)
+    if (!empty())
     {
-        IntNode* currNode = dummyHead->next;
-        delete currNode;
-        dummyHead->next = dummyTail;
-        dummyTail->prev = dummyHead;
-    }
-    else
-    {
-        IntNode* currNode = dummyHead->next;
-        IntNode* sucNode = currNode->next;
-        dummyHead->next = sucNode;
-        sucNode->prev = dummyHead;
-        delete currNode;
+        //if only 1 element in list
+        if (dummyHead == dummyTail)
+        {
+            IntNode* currNode = dummyHead->next;
+            delete currNode;
+            dummyHead->next = dummyTail;
+            dummyTail->prev = dummyHead;
+        }
+        else
+        {
+            IntNode* currNode = dummyHead->next;
+            IntNode* sucNode = currNode->next;
+            dummyHead->next = sucNode;
+            sucNode->prev = dummyHead;
+            delete currNode;
+        }
     }
 }
 
@@ -120,14 +123,12 @@ ostream & operator<<(ostream &out, const IntList &rhs)
             if (curr->next != rhs.dummyTail)
             {  
                 out << curr->data << " ";
-                curr = curr->next;
             }
             else
             {
                 out << curr->data;
-                curr = curr->next;
             }
-            
+            curr = curr->next;
         }
         return out;
     }
@@ -145,7 +146,14 @@ void IntList::printReverse() const
         IntNode* curr = dummyTail->prev;
         while (curr != dummyHead)
         {
-            cout << curr->data;
+            if (curr->prev != dummyHead)
+            {
+                cout << curr->data << " ";
+            }
+            else
+            {
+                cout << curr->data;
+            }
             curr = curr->prev;
         }
     }
