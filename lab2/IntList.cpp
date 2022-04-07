@@ -94,17 +94,11 @@ void IntList::push_back(int value)
 
 void IntList::pop_back() {
     
-    if (dummyHead->next != nullptr) {
-        IntNode* temp = dummyTail;
-        dummyTail = temp->prev;
-        if (dummyHead != nullptr) {
-            dummyTail->next = nullptr;
-        }
-        else {
-            dummyHead = nullptr;
-        }
+    if (!empty()) {
+        IntNode* temp = dummyTail->prev;
+        temp->prev->next = dummyTail;
+        dummyTail->prev = temp->prev;
         delete temp;
-
     }
 }
     
