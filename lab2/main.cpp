@@ -25,7 +25,13 @@ int main () {
 
     cout << "Testing pop_back()" << endl;
     testList.pop_back();
+    testList.pop_back();
     cout << testList << endl;
+
+
+    cout << "Testing printReverse()" << endl;
+    testList.printReverse();
+    cout << endl;
 
     return 0;
 }

@@ -92,8 +92,7 @@ void IntList::push_back(int value)
     }
 }
 
-void IntList::pop_back()
-{
+void IntList::pop_back() {
     
     if (dummyHead->next != nullptr) {
         IntNode* temp = dummyTail;
@@ -107,7 +106,6 @@ void IntList::pop_back()
         delete temp;
 
     }
-    
 }
     
 bool IntList::empty() const
@@ -158,7 +156,12 @@ void IntList::printReverse() const
         IntNode* curr = dummyTail->prev;
         while (curr != dummyHead)
         {
+            if (curr == dummyTail->prev) {
+                cout << curr->data << " ";
+            }
+            else {
             cout << curr->data;
+            }
             curr = curr->prev;
         }
     }
