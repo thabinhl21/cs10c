@@ -223,7 +223,7 @@ int main()
 
         if (userInput == 'o')
         {
-            cout << endl;
+            //cout << endl;
             cout << playlistTitle << " - OUTPUT FULL PLAYLIST" << endl;
             if (head == nullptr)
             {
