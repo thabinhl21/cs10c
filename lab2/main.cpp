@@ -83,6 +83,11 @@ int main () {
     cout << testList << endl;
     cout << endl;
 
+    cout << "testing printReverse on 1 elenent list" << endl;
+    testList.printReverse();
+    cout << endl;
+    cout << endl;
+
     cout << "pop_back()" << endl;
     testList.pop_back();
     cout << testList << endl;
@@ -91,6 +96,11 @@ int main () {
     cout << "Testing pop_back() on empty list" << endl;
     testList.pop_back();
     cout << testList << endl;
+    cout << endl;
+
+    cout << "testing printReverse on empty list" << endl;
+    testList.printReverse();
+    cout << endl;
     cout << endl;
 
     return 0;
