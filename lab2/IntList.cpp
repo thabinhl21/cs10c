@@ -10,13 +10,15 @@ IntList::IntList() {
     dummyTail->next = nullptr;
 }
 
-IntList::~IntList() {
+IntList::~IntList() { 
     
-    while (dummyHead != nullptr) { //shouldm't this be temp != nullptr?
-        IntNode* temp;
-        temp = dummyHead;
-        dummyHead = dummyHead->next;
-        delete temp;
+    IntNode* currNode = dummyHead->next;
+    IntNode* sucNode = dummyHead->next->next;
+
+    while (currNode != dummyTail) {
+        delete currNode;
+        currNode = sucNode;
+        sucNode = sucNode->next;
     }
 }
 
@@ -25,7 +27,7 @@ void IntList::push_front(int value) {
     n = new IntNode(value);
 
     // if list is empty
-    if (dummyHead == nullptr) {
+    if (dummyHead->next == dummyTail) {
         dummyHead->next = n;
         dummyTail->prev = n;
         n->next = dummyTail;
@@ -33,15 +35,17 @@ void IntList::push_front(int value) {
     }
 
     // if only 1 element in list
-    else if (dummyHead == dummyTail) { //this shouldn't be dummyHead->next == dummyTail->prev?
-        dummyHead->prev = n;
-        n->next = dummyHead;
-        dummyHead->next = dummyTail;
+    else if (dummyHead->next == dummyTail->prev) {
+        dummyHead->next->prev = n;
+        n->next = dummyHead->next;
+        dummyHead->next = n;
     }
     
     else {
-        n->next = dummyHead;
-        dummyHead = n;
+        dummyHead->next->prev = n;
+        n->next = dummyHead->next;
+        n->prev = dummyHead;
+        dummyHead->next = n;
     }
 }
 
@@ -113,8 +117,17 @@ ostream & operator<<(ostream &out, const IntList &rhs)
 
         while (curr != rhs.dummyTail)
         {
-            out << curr->data;
-            curr = curr->next;
+            if (curr->next != rhs.dummyTail)
+            {  
+                out << curr->data << " ";
+                curr = curr->next;
+            }
+            else
+            {
+                out << curr->data;
+                curr = curr->next;
+            }
+            
         }
         return out;
     }

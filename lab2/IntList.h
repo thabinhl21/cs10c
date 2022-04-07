@@ -8,7 +8,7 @@ struct IntNode {
     int data;
     IntNode *prev;
     IntNode *next;
-    IntNode(int data) : data(data), prev(0), next(0) {}
+    IntNode(int data) : data(data), prev(nullptr), next(nullptr) {}
 };
 
 class IntList {
