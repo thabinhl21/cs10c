@@ -94,7 +94,20 @@ void IntList::push_back(int value)
 
 void IntList::pop_back()
 {
-    return;
+    
+    if (dummyHead->next != nullptr) {
+        IntNode* temp = dummyTail;
+        dummyTail = temp->prev;
+        if (dummyHead != nullptr) {
+            dummyTail->next = nullptr;
+        }
+        else {
+            dummyHead = nullptr;
+        }
+        delete temp;
+
+    }
+    
 }
     
 bool IntList::empty() const

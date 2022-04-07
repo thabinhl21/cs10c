@@ -23,5 +23,9 @@ int main () {
     testList.push_front(3);
     cout << testList << endl;
 
+    cout << "Testing pop_back()" << endl;
+    testList.pop_back();
+    cout << testList << endl;
+
     return 0;
 }
