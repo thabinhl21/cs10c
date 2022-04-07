@@ -10,13 +10,15 @@ IntList::IntList() {
     dummyTail->next = nullptr;
 }
 
-IntList::~IntList() {
+IntList::~IntList() { 
     
-    while (dummyHead != nullptr) {
-        IntNode* temp;
-        temp = dummyHead;
-        dummyHead = dummyHead->next;
-        delete temp;
+    IntNode* currNode = dummyHead->next;
+    IntNode* sucNode = dummyHead->next->next;
+
+    while (currNode != dummyTail) {
+        delete currNode;
+        currNode = sucNode;
+        sucNode = sucNode->next;
     }
 }
 
@@ -25,7 +27,7 @@ void IntList::push_front(int value) {
     n = new IntNode(value);
 
     // if list is empty
-    if (dummyHead == nullptr) {
+    if (dummyHead->next == dummyTail) {
         dummyHead->next = n;
         dummyTail->prev = n;
         n->next = dummyTail;
@@ -33,14 +35,118 @@ void IntList::push_front(int value) {
     }
 
     // if only 1 element in list
-    else if (dummyHead == dummyTail) {
-        dummyHead->prev = n; // insert new node n before head
-        n->next = dummyHead; 
-        dummyHead->next = dummyTail;
+    else if (dummyHead->next == dummyTail->prev) {
+        dummyHead->next->prev = n;
+        n->next = dummyHead->next;
+        dummyHead->next = n;
     }
     
     else {
-        n->next = dummyHead;
-        dummyHead = n;
+        dummyHead->next->prev = n;
+        n->next = dummyHead->next;
+        n->prev = dummyHead;
+        dummyHead->next = n;
+    }
+}
+
+void IntList::pop_front()
+{
+
+    //if only 1 element in list
+    if (dummyHead == dummyTail)
+    {
+        IntNode* currNode = dummyHead->next;
+        delete currNode;
+        dummyHead->next = dummyTail;
+        dummyTail->prev = dummyHead;
+    }
+    else
+    {
+        IntNode* currNode = dummyHead->next;
+        IntNode* sucNode = currNode->next;
+        dummyHead->next = sucNode;
+        sucNode->prev = dummyHead;
+        delete currNode;
+    }
+}
+
+void IntList::push_back(int value)
+{
+    IntNode* pushBack = new IntNode(value);
+
+    //push back in empty list
+    if (dummyHead == nullptr)
+    {
+        dummyHead->next = pushBack;
+        pushBack->prev = dummyHead;
+        pushBack->next = dummyTail;
+        dummyTail->prev = pushBack;
+    }
+    else
+    {
+        IntNode* oldTail = dummyTail->prev;
+        oldTail->next = pushBack;
+        pushBack->next = dummyTail;
+        pushBack->prev = oldTail;
+        dummyTail->prev = pushBack;
+    }
+}
+
+void IntList::pop_back()
+{
+    return;
+}
+    
+bool IntList::empty() const
+{
+    if (dummyHead->next == dummyTail)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+    
+ostream & operator<<(ostream &out, const IntList &rhs)
+{
+    if (!rhs.empty())
+    {
+        IntNode* curr = rhs.dummyHead->next;
+
+        while (curr != rhs.dummyTail)
+        {
+            if (curr->next != rhs.dummyTail)
+            {  
+                out << curr->data << " ";
+                curr = curr->next;
+            }
+            else
+            {
+                out << curr->data;
+                curr = curr->next;
+            }
+            
+        }
+        return out;
+    }
+    else
+    {
+        out << "";
+        return out;
+    }
+}
+    
+void IntList::printReverse() const
+{
+    if (!this->empty())
+    {
+        IntNode* curr = dummyTail->prev;
+        while (curr != dummyHead)
+        {
+            cout << curr->data;
+            curr = curr->prev;
+        }
     }
 }
