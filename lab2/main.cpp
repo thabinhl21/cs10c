@@ -87,5 +87,10 @@ int main () {
     cout << testList << endl;
     cout << endl;
 
+    cout << "Testing pop_back() on empty list" << endl;
+    testList.pop_back();
+    cout << testList << endl;
+    cout << endl;
+
     return 0;
 }

@@ -23,53 +23,22 @@ IntList::~IntList() {
 }
 
 void IntList::push_front(int value) {
-    IntNode *n;
-    n = new IntNode(value);
-
-    // if list is empty
-    if (dummyHead->next == dummyTail) {
-        dummyHead->next = n;
-        dummyTail->prev = n;
-        n->next = dummyTail;
-        n->prev = dummyHead;
-    }
-
-    // if only 1 element in list
-    else if (dummyHead->next == dummyTail->prev) {
-        dummyHead->next->prev = n;
-        n->next = dummyHead->next;
-        dummyHead->next = n;
-    }
-    
-    else {
-        dummyHead->next->prev = n;
-        n->next = dummyHead->next;
-        n->prev = dummyHead;
-        dummyHead->next = n;
-    }
+    IntNode *n = new IntNode(value);
+    dummyHead->next->prev = n;
+    n->next = dummyHead->next;
+    n->prev = dummyHead;
+    dummyHead->next = n;
 }
 
 void IntList::pop_front()
 {
-
     if (!empty())
     {
-        //if only 1 element in list
-        if (dummyHead == dummyTail)
-        {
-            IntNode* currNode = dummyHead->next;
-            delete currNode;
-            dummyHead->next = dummyTail;
-            dummyTail->prev = dummyHead;
-        }
-        else
-        {
-            IntNode* currNode = dummyHead->next;
-            IntNode* sucNode = currNode->next;
-            dummyHead->next = sucNode;
-            sucNode->prev = dummyHead;
-            delete currNode;
-        }
+        IntNode* currNode = dummyHead->next;
+        IntNode* sucNode = currNode->next;
+        dummyHead->next = sucNode;
+        sucNode->prev = dummyHead;
+        delete currNode;
     }
 }
 
@@ -95,9 +64,16 @@ void IntList::push_back(int value)
     }
 }
 
-void IntList::pop_back()
-{
-    return;
+void IntList::pop_back() {
+    
+    if (!empty())
+    {
+        IntNode* temp = dummyTail->prev;
+        temp = dummyTail->prev;
+        temp->prev->next = dummyTail;
+        dummyTail->prev = temp->prev;
+        delete temp;
+    }
 }
     
 bool IntList::empty() const
@@ -146,13 +122,11 @@ void IntList::printReverse() const
         IntNode* curr = dummyTail->prev;
         while (curr != dummyHead)
         {
-            if (curr->prev != dummyHead)
-            {
+            if (curr == dummyTail->prev) {
                 cout << curr->data << " ";
             }
-            else
-            {
-                cout << curr->data;
+            else {
+            cout << curr->data;
             }
             curr = curr->prev;
         }
