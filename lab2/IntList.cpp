@@ -34,8 +34,8 @@ void IntList::push_front(int value) {
 
     // if only 1 element in list
     else if (dummyHead == dummyTail) {
-        dummyHead->prev = n;
-        n->next = dummyHead;
+        dummyHead->prev = n; // insert new node n before head
+        n->next = dummyHead; 
         dummyHead->next = dummyTail;
     }
     
