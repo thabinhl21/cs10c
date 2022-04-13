@@ -61,12 +61,36 @@ T getElement(vector<T> vals, int index) {
 }
 
 int main() {
+    
+    //testing selection_sort
+    vector<int> testVec;
+
+    for (unsigned int i = 0; i < 20; ++i) {
+        testVec.push_back(rand() % 20 + 1);
+    }
+
+    selection_sort(testVec);
+
+    for (unsigned int i = 0; i < testVec.size(); ++i) {
+        cout << testVec.at(i) << " ";
+    }
+
+    cout << endl;
+
     srand(time(0));
     vector<char> vals = createVector();
     char curChar;
     int index;
     int numOfRuns = 10;
     while(--numOfRuns >= 0){
+        cout << "Enter a number: " << endl;
+        cin >> index;
+        curChar = getElement(vals,index);
+        cout << "Element located at " << index << ": is " << curChar << endl;
+    }
+
+
+    
         try {
             cout << "Enter a number: " << endl;
             cin >> index;
@@ -77,6 +101,5 @@ int main() {
         {
             cout << excpt.what() << endl;
         }
-}
     return 0;
 }
