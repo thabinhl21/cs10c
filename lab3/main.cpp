@@ -63,6 +63,7 @@ T getElement(vector<T> vals, int index) {
 int main() {
     
     //testing selection_sort
+    cout << "Testing selection sort with integers" << endl;
     vector<int> testVec;
 
     for (unsigned int i = 0; i < 20; ++i) {
@@ -73,6 +74,21 @@ int main() {
 
     for (unsigned int i = 0; i < testVec.size(); ++i) {
         cout << testVec.at(i) << " ";
+    }
+
+    cout << endl;
+
+    cout << "Testing selection sort with doubles" << endl;
+
+    vector<double> testDoub;
+    for (unsigned int i = 0; i < 20; ++i) {
+        testDoub.push_back((rand() % 100) * 0.1);
+    }
+
+    selection_sort(testDoub);
+
+    for (unsigned int i = 0; i < testDoub.size(); ++i) {
+        cout << testDoub.at(i) << " ";
     }
 
     cout << endl;
