@@ -51,6 +51,10 @@ vector<char> createVector(){
     return vals;
 }
 
+template<typename T>
+T getElement(vector<T> vals, int index) {
+    return vals.at(index);
+}
 
 int main() {
     srand(time(0));
