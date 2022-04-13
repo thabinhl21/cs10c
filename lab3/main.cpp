@@ -57,6 +57,7 @@ T getElement(vector<T> vals, int index) {
 }
 
 int main() {
+    
     srand(time(0));
     vector<char> vals = createVector();
     char curChar;
@@ -67,6 +68,23 @@ int main() {
         cin >> index;
         curChar = getElement(vals,index);
         cout << "Element located at " << index << ": is " << curChar << endl;
-}
+    }
+
+    //testing selection_sort
+    vector<int> testVec;
+
+    for (unsigned int i = 0; i < 20; ++i) {
+        testVec.push_back(rand() % 20 + 1);
+    }
+
+    selection_sort(testVec);
+
+    for (unsigned int i = 0; i < testVec.size(); ++i) {
+        cout << testVec.at(i) << " ";
+    }
+
+    cout << endl;
+
+    
     return 0;
 }
