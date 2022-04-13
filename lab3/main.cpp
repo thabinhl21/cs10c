@@ -93,6 +93,23 @@ int main() {
 
     cout << endl;
 
+    cout << "Testing selection sort with string" << endl;
+
+    vector<string> stringTestVec;
+    stringTestVec.push_back("University");
+    stringTestVec.push_back("Of");
+    stringTestVec.push_back("California");
+    stringTestVec.push_back("Riverside");
+    stringTestVec.push_back("Cs10c");
+    stringTestVec.push_back("Section");
+    stringTestVec.push_back("Two");
+    selection_sort(stringTestVec);
+
+    for (unsigned int i = 0; i < stringTestVec.size(); ++i) {
+        cout << stringTestVec.at(i) << " ";
+    }
+    cout << endl;
+
     srand(time(0));
     vector<char> vals = createVector();
     char curChar;
