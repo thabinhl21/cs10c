@@ -116,14 +116,6 @@ int main() {
     int index;
     int numOfRuns = 10;
     while(--numOfRuns >= 0){
-        cout << "Enter a number: " << endl;
-        cin >> index;
-        curChar = getElement(vals,index);
-        cout << "Element located at " << index << ": is " << curChar << endl;
-    }
-
-
-    
         try {
             cout << "Enter a number: " << endl;
             cin >> index;
@@ -134,5 +126,7 @@ int main() {
         {
             cout << excpt.what() << endl;
         }
+    }
+        
     return 0;
 }
