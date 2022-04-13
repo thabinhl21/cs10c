@@ -63,6 +63,7 @@ T getElement(vector<T> vals, int index) {
 int main() {
     
     //testing selection_sort
+    cout << "Testing selection_sort on integers:" << endl;
     vector<int> testVec;
 
     for (unsigned int i = 0; i < 20; ++i) {
@@ -76,6 +77,15 @@ int main() {
     }
 
     cout << endl;
+
+    cout << "Testing selection_sort on strings:" << endl;
+
+    vector<string> testVecString{"University", "Of", "California", "Riverside", "Cs10c", "Class", "Section", "Two"};
+    selection_sort(testVecString);
+
+    for (unsigned int i = 0; i < testVecString.size(); ++i) {
+        cout << testVecString.at(i) << " ";
+    }
 
     srand(time(0));
     vector<char> vals = createVector();
