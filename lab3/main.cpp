@@ -53,7 +53,8 @@ vector<char> createVector(){
 
 template<typename T>
 T getElement(vector<T> vals, int index) {
-    if (index < 0 || index >= vals.size())
+    unsigned i = index; //need to compare vals.size (unsigned) to unsigned into
+    if (index < 0 || i >= vals.size())
     {
         throw out_of_range ("out of range exception occured");
     }
