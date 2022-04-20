@@ -18,11 +18,12 @@ class stack {
         }
 
         void push(T val) {
-            if (size > MAX_SIZE) {
+            if (size == MAX_SIZE) { //if size == max size, stack is full
                 throw overflow_error("Called push on full stack.");
             }
-            for (int i = 0; i < size; i++) {
-                data[i] = val;
+            else {
+                data[size] = val; //put value at index of size - index goes from 0 to 20
+                ++size; //increment size
             }
         }
 
@@ -61,4 +62,3 @@ class stack {
 };
 
 #endif
-
