@@ -1,9 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <stdexcept>
-
-using namespace std;
 
 template<typename T>
 unsigned min_index(const vector<T> &vals, unsigned index);
