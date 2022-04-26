@@ -19,12 +19,13 @@ else {
 
     while (nodeIndex > 0) {
         int parentIndex = (nodeIndex - 1) / 2;
-        if (arr[nodeIndex]->getPriority() <= arr[parentIndex]->getPriority()) {
+        if (newJob->getPriority() <= arr[parentIndex]->getPriority()) {
+            arr[nodeIndex] = newJob;
             return;
             }
 
         else {
-            PrintJob* temp = arr[nodeIndex];
+            PrintJob* temp = newJob;
             arr[nodeIndex] = arr[parentIndex];
             arr[parentIndex] = temp;
             nodeIndex = parentIndex; //on next loop, node will be compared to new parent
