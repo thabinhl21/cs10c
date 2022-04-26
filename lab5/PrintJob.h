@@ -1,8 +1,6 @@
 #ifndef __PRINTJOB_H
 #define __PRINTJOB_H
 
-using namespace std;
-
 class PrintJob {
 private:
   int priority;
