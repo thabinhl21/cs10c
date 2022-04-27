@@ -10,9 +10,14 @@ Heap::Heap() {
 
 void Heap::enqueue (PrintJob* newJob) {
 //insertion in max-heap -- percolate up
+if (numItems == MAX_HEAP_SIZE)
+{
+    return;
+}
 
-if (numItems == 0) {
+else if (numItems == 0) {
     arr[0] = newJob; //if first job in heap, make root
+    ++numItems;
 }
 
 else {
@@ -22,6 +27,7 @@ else {
         int parentIndex = (nodeIndex - 1) / 2;
         if (newJob->getPriority() <= arr[parentIndex]->getPriority()) {
             arr[nodeIndex] = newJob; //if new job is less than or equal priority to parent, place it as child
+            ++numItems;
             return;
             }
 
@@ -33,11 +39,10 @@ else {
             nodeIndex = parentIndex; //on next loop, node will be compared to new parent
         }
     }
-}
     ++numItems;
 }
+}
 
-//FIXME:
 void Heap::dequeue ( ) {
     if (numItems < 1)
     {
@@ -45,36 +50,18 @@ void Heap::dequeue ( ) {
     }
     if (numItems == 1)
     {
-        delete highest();
         --numItems;
     }
     else
     {
-        delete highest();
-        arr[0] = arr[numItems - 1];
-        delete arr[numItems - 1];
-        trickleDown(0);
-        --numItems;
+        arr[0] = arr[numItems - 1]; //set root to last leaf
+        --numItems; //decrement num of items
+        trickleDown(0); //trickle down
     }
 }
 
-//FIXME: 
-PrintJob* Heap::highest ( ) {
-
-if (numItems > 0) {
-    int maxIndex = 0;
-
-    for (int i = 0; i < numItems; ++i) {
-        if (arr[i]->getPriority() > arr[maxIndex]->getPriority())
-        {
-            maxIndex = i;
-        }
-    }
-    return arr[maxIndex];
-}
-else {
-    throw underflow_error("Called highest on empty heap.");
-}
+PrintJob* Heap::highest () {
+    return arr[0];
 }
 
 void Heap::print () {
@@ -83,28 +70,29 @@ if (numItems > 0) {
     }
 }
 
-//FIXME: 
-void Heap::trickleDown(int newRoot) {
+void Heap::trickleDown(int parentIndex) {
 
-int childIndex = 2 * newRoot + 1;
+int childIndex = 1;
+int maxIndex = 0;
 
 while (childIndex < numItems) {
-    int maxIndex = 0;
+
     for (int i = 0; i < 2 && i + childIndex < numItems; ++i) {
-        if (arr[i + childIndex]->getPriority() >  arr[newRoot]->getPriority()) {
+        if (arr[i + childIndex]->getPriority() >  arr[maxIndex]->getPriority()) {
             maxIndex = i + childIndex;
         }
     }
 
-    if (arr[maxIndex]->getPriority() == arr[newRoot]->getPriority()) {
+    if (arr[maxIndex] == arr[parentIndex]) {
         return;
     }
 
     else {
-        PrintJob* temp = arr[newRoot];
-        arr[newRoot] = arr[maxIndex];
+        PrintJob* temp = arr[parentIndex];
+        arr[parentIndex] = arr[maxIndex];
         arr[maxIndex] = temp;
-        childIndex = 2 * newRoot + 1;
+        parentIndex = maxIndex;
+        childIndex = 2 * maxIndex + 1;
     }
 }
     
