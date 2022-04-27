@@ -37,5 +37,6 @@ private:
   void trickleDown(int);
 
   //You can include additional private helper functions here
+  bool IsEmpty();
 };
 #endif

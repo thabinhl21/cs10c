@@ -8,6 +8,7 @@ int menu() {
   cout << endl << "Enter menu choice: ";
   cout << endl;
   cout 
+    //<< "0. Highest" << endl
     << "1. Enqueue" << endl
     << "2. Print" << endl
     << "3. Dequeue" << endl
@@ -22,19 +23,24 @@ int menu() {
 }
 
 int main(){
-    Heap max_heap;
+  Heap max_heap;
+
   int choice = menu();
 
-    while (choice != 4) {
 
-    if (choice == 1) {
+  while (choice != 4) {
+
+  try {
+    if (choice == 0) {
+        cout << "Highest: " << max_heap.highest()->getPriority() << endl;
+    }
+    else if (choice == 1) {
       int priority, jobNumber, numPages;
       cout << "Enter print job to enqueue (priority, job Number, number of pages): ";
       cin>>priority>>jobNumber>>numPages;
       cout << endl;
 
       max_heap.enqueue(new PrintJob(priority, jobNumber, numPages));
-
     } 
     else if (choice == 2) {
       max_heap.print();
@@ -42,8 +48,17 @@ int main(){
     else if (choice == 3) {
         max_heap.dequeue();
     }
+      
     //fix buffer just in case non-numeric choice entered
     choice = menu();
+  }
+
+  catch(underflow_error & e) {
+    cout << e.what() << endl;
+    choice = menu();
     }
-    return 0;
+    
+  }
+
+  return 0;
 }
