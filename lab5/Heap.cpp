@@ -1,5 +1,6 @@
 #include "Heap.h"
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ void Heap::enqueue (PrintJob* newJob) {
 //insertion in max-heap -- percolate up
 
 if (numItems == 0) {
-    arr[0] = newJob;
+    arr[0] = newJob; //if first job in heap, make root
 }
 
 else {
@@ -20,11 +21,12 @@ else {
     while (nodeIndex > 0) {
         int parentIndex = (nodeIndex - 1) / 2;
         if (newJob->getPriority() <= arr[parentIndex]->getPriority()) {
-            arr[nodeIndex] = newJob;
+            arr[nodeIndex] = newJob; //if new job is less than or equal priority to parent, place it as child
             return;
             }
 
         else {
+            //swap parent and child
             PrintJob* temp = newJob;
             arr[nodeIndex] = arr[parentIndex];
             arr[parentIndex] = temp;
@@ -35,25 +37,75 @@ else {
     ++numItems;
 }
 
-
+//FIXME:
 void Heap::dequeue ( ) {
-
-
+    if (numItems < 1)
+    {
+        return;
+    }
+    if (numItems == 1)
+    {
+        delete highest();
+        --numItems;
+    }
+    else
+    {
+        delete highest();
+        arr[0] = arr[numItems - 1];
+        delete arr[numItems - 1];
+        trickleDown(0);
+        --numItems;
+    }
 }
 
+//FIXME: 
 PrintJob* Heap::highest ( ) {
-    return arr[0];
-}
-
-void Heap::print ( ) {
 
 if (numItems > 0) {
-    cout << "Priority: " << arr[0]->getPriority() << ", Job Number: " << arr[0]->getJobNumber() << ", Number of Pages: " << arr[0]->getPages() << endl;
+    int maxIndex = 0;
+
+    for (int i = 0; i < numItems; ++i) {
+        if (arr[i]->getPriority() > arr[maxIndex]->getPriority())
+        {
+            maxIndex = i;
+        }
     }
-
-
+    return arr[maxIndex];
+}
+else {
+    throw underflow_error("Called highest on empty heap.");
+}
 }
 
+void Heap::print () {
+if (numItems > 0) {
+    cout << "Priority: " << highest()->getPriority() << ", Job Number: " << highest()->getJobNumber() << ", Number of Pages: " << highest()->getPages() << endl;
+    }
+}
+
+//FIXME: 
 void Heap::trickleDown(int newRoot) {
+
+int childIndex = 2 * newRoot + 1;
+
+while (childIndex < numItems) {
+    int maxIndex = 0;
+    for (int i = 0; i < 2 && i + childIndex < numItems; ++i) {
+        if (arr[i + childIndex]->getPriority() >  arr[newRoot]->getPriority()) {
+            maxIndex = i + childIndex;
+        }
+    }
+
+    if (arr[maxIndex]->getPriority() == arr[newRoot]->getPriority()) {
+        return;
+    }
+
+    else {
+        PrintJob* temp = arr[newRoot];
+        arr[newRoot] = arr[maxIndex];
+        arr[maxIndex] = temp;
+        childIndex = 2 * newRoot + 1;
+    }
+}
     
 }

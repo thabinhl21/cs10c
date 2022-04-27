@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include "Heap.h"
 
 using namespace std;
@@ -38,10 +39,21 @@ int main(){
 
     } 
     else if (choice == 2) {
+      try {
+      
       max_heap.print();
+      }
+       catch(underflow_error & e){
+           cout<<e.what()<<endl;
+       }
     }
     else if (choice == 3) {
+        try {
         max_heap.dequeue();
+        }
+         catch(underflow_error & e){
+           cout<<e.what()<<endl;
+       }
     }
     //fix buffer just in case non-numeric choice entered
     choice = menu();
