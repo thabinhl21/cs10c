@@ -1,6 +1,5 @@
 #include "Heap.h"
 #include <iostream>
-#include <stdexcept>
 
 using namespace std;
 
@@ -61,7 +60,7 @@ void Heap::dequeue ( ) {
 }
 
 PrintJob* Heap::highest () {
-    return arr[0];
+            return arr[0];
 }
 
 void Heap::print () {
