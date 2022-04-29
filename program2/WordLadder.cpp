@@ -32,6 +32,14 @@ WordLadder::WordLadder(const string &filename) {
 }
 
 // THIS FUNCTION IS NOT FINISHED AND THEREFORE HAS NOT BEEN TESTED
+/*
+
+TO-DO:
+    - check to see if the word exists in the dictionary
+        - if it does not, output an error message
+    - if the queue is empty and no word ladder was found
+
+*/
 void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
     string currWord;
     //create a stack
@@ -93,9 +101,13 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                     outFS.close();
 
                 }
+                else {
+                    q.push(newStack);
+                    dict.erase(currWord);
+                }
             }
+
         }
-
+        q.pop();
     }
-
 }
