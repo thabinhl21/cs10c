@@ -5,7 +5,7 @@
 #include <queue>
 #include <fstream>
 #include <iostream>
-
+#include <vector>
 
 WordLadder::WordLadder(const string &filename) {
     ifstream inFS;
@@ -63,7 +63,36 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                 // create a copy of the front stack
                 stack<string> newStack;
                 newStack = q.front();
+                newStack.push(currWord);
 
+                //if that word is the end of the word ladder
+                //output word ladder to file
+                if (currWord == end) {
+                    ofstream outFS;
+                    string word;
+                    vector<string> wordVec;
+
+                    outFS.open(outputFile);
+
+                    if (!outFS.is_open()) {
+                        cout << "Error opening " << outputFile << endl;
+                        return;
+                    }
+
+                    // add words from the stack into a vector to print in reverse
+                    while (!newStack.empty()) {
+                        word = newStack.top();
+                        wordVec.push_back(word);
+                        newStack.pop();
+                    }
+
+                    // iterating through vector and outputting to file the words in reverse
+                    for (unsigned int i = wordVec.size() - 1; i >= 0; ++i) {
+                        outFS << wordVec.at(i) << endl;
+                    }
+                    outFS.close();
+
+                }
             }
         }
 
