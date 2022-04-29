@@ -60,7 +60,7 @@ void Heap::dequeue ( ) {
 
 PrintJob* Heap::highest () {
     if (IsEmpty()) {
-        throw underflow_error("Called highest on empty stack.");
+        return nullptr;
     }
     else {
         return arr[0];
