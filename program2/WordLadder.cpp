@@ -42,6 +42,9 @@ TO-DO:
 */
 void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
     string currWord;
+    bool startExist = true;
+    bool endExist = true;
+
     //create a stack
     stack<string> s;
     //create a queue of stacks
@@ -52,6 +55,27 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     //add stack to queue
     q.push(s);
 
+    //check to see if start and end words are in the dict
+    for (list<string>::iterator i = dict.begin(); i != dict.end(); ++i) {
+        if (start != *i) {
+            startExist = false;
+        }
+        if (end != *i) {
+            endExist = false;
+        }
+    }
+
+    if (!startExist) {
+        cout << "ERROR: The start word does not exist in the dictionary" << endl;
+        return;
+    }
+
+    if (!endExist) {
+        cout << "ERROR: The end word does not exist in the dictionary" << endl;
+        return;
+    }
+
+    //loop for finding a word ladder
     while (!q.empty()) {
 
         //get the word on top of the front stack of the queue
@@ -110,5 +134,8 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
 
         }
         q.pop();
+    }
+    if (q.empty()) {
+
     }
 }
