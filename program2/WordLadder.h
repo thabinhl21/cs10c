@@ -2,6 +2,7 @@
 #define __WORDLADDER_H__
 
 #include <list>
+#include <string>
 
 using namespace std;
 

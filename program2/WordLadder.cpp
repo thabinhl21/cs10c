@@ -1,4 +1,4 @@
-
+// Got help with list iterator from https://www.codegrepper.com/code-examples/cpp/how+to+iterate+through+list+c%2B%2B
 #include "WordLadder.h"
 
 #include <stack>
@@ -57,12 +57,13 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         //get the word on top of the front stack of the queue
         currWord = q.front().top();
         //iterate through dict
-        for (i = 0; i < dict.size(); ++i) {
+        for (list<string>::iterator i = dict.begin(); i != dict.end(); ++i) {
             int numDiff = 0;
+            string dictWord = *i;
             // comparing the top word from the stack to each word in dict
-            for (j = 0; j < currWord.size(); ++j) {
+            for (unsigned int j = 0; j < currWord.size(); ++j) {
                 // comparing letters of the word in the dict to the top word
-                if (i.at(j) != currWord.at(j)) {
+                if (dictWord.at(j) != currWord.at(j)) {
                     numDiff += 1;
                 }
             }
@@ -103,7 +104,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                 }
                 else {
                     q.push(newStack);
-                    dict.erase(currWord);
+                    dict.remove(currWord);
                 }
             }
 
