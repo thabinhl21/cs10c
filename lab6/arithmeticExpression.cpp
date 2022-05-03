@@ -3,6 +3,29 @@
 #include <fstream>
 #include <sstream>
 
+arithmeticExpression::arithmeticExpression(const string &expr)
+{
+    infixExpression = expr;
+}
+
+void arithmeticExpression::buildTree()
+{
+    stack<TreeNode> tree;
+    infixExpression = infix_to_postfix(); //converts infix to postfix
+    char key = 'a';
+    for (unsigned i = 0; i < infixExpression.size(); ++i) //loop through postfix
+    {
+        if (infixExpression.at(i) != ' ') //ignore spaces
+        {
+            tree.push(TreeNode(infixExpression.at(i), key)); //create node with value and key and add it to tree stack
+            if (key == 'a') //if key is a, node is root
+            {
+                root = &tree.top();
+            }
+            ++key; //increment key
+        }
+    }
+}
 
 int arithmeticExpression::priority(char op){
     int priority = 0;
