@@ -158,8 +158,8 @@ void arithmeticExpression::prefix(TreeNode *node)
     else
     {
         cout << node->data;
-        infix(node->left);
-        infix(node->right);
+        prefix(node->left);
+        prefix(node->right);
     }
 }
 
@@ -171,8 +171,8 @@ void arithmeticExpression::postfix(TreeNode *node)
     }
     else
     {
-        infix(node->left);
-        infix(node->right);
+        postfix(node->left);
+        postfix(node->right);
         cout << node->data;
     }
 }
