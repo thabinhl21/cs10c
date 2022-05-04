@@ -9,15 +9,13 @@
 
 WordLadder::WordLadder(const string &filename) {
     ifstream inFS;
-    string word;
-
     inFS.open(filename);
 
     if (!inFS.is_open()) {
         cout << "Error opening " << filename << endl;
         return;
     }
-
+    string word;
     //extract words from the file
     while (inFS >> word) {
         //check to see if word has exactly 5 letters
@@ -31,42 +29,92 @@ WordLadder::WordLadder(const string &filename) {
     inFS.close();
 }
 
-// THIS FUNCTION IS NOT FINISHED AND THEREFORE HAS NOT BEEN TESTED
-/*
+bool WordLadder::offByOne(const string &s1, const string &s2) const {
+	unsigned int numDiff = 0;
+    string currWord = s1;
+    string dictWord = s2;
+    // comparing the top word from the stack to each word in dict
+    for (unsigned int j = 0; j < currWord.size(); ++j) {
+        // comparing letters of the word in the dict to the top word
+        if (dictWord.at(j) != currWord.at(j)) {
+            numDiff += 1;
+        }
+    }
+    return numDiff == 1;
+}
 
-TO-DO:
-    - check to see if the word exists in the dictionary
-        - if it does not, output an error message
-    - if the queue is empty and no word ladder was found
-
-*/
-void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
-    string currWord;
-    bool startExist = false;
-    bool endExist = false;
-    ofstream outFS;
-    //create a stack
-    stack<string> s;
+bool WordLadder::findLadder(stack<string> &s, const string &end) {
+    
     //create a queue of stacks
     queue<stack<string> > q;
-
-    s.push(start);
-
+    
     //add stack to queue
     q.push(s);
 
+    //loop for finding a word ladder
+    while (!q.empty()) {
+        //get the word on top of the front stack of the queue
+        
+        string currWord = q.front().top();
+        stack<string> newStack;
+        //iterate through dict
+        for (list<string>::iterator i = dict.begin(); i != dict.end();) {
+            if (offByOne(currWord, *i)) {
+                //if that word is the end of the word ladder
+                //output word ladder to file
+                if (*i == end) {
+                    s = q.front();
+                    s.push(*i);
+                    return true;
+                }
+                newStack = q.front();
+                newStack.push(*i);
+                i = dict.erase(i);
+                q.push(newStack);
+            }
+            else {
+                ++i;
+            }
+        }
+        q.pop();
+    }
+    return false;
+}
 
-    //if same word for start and end
-    if (start == end) {
-        outFS.open(outputFile);
-        if (!outFS.is_open()) {
+void WordLadder::output(stack<string> &s, ostream &sout) const {
+	stack<string> newStack;
+	while (!s.empty()) {
+		newStack.push(s.top());
+		s.pop();
+	}
+	if (!newStack.empty()) {
+      sout << newStack.top();
+      newStack.pop();
+	}
+	while (!newStack.empty()) {
+		sout << " " << newStack.top();
+		newStack.pop();
+	}
+}
+
+void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
+    ofstream outFS;
+    outFS.open(outputFile);
+    if (!outFS.is_open()) {
             cout << "Error opening " << outputFile << endl;
             return;
-        }
+    }
+    
+     //if same word for start and end
+    if (start == end) {
+        
         outFS << start << endl;
         outFS.close();
         return;
     }
+    
+    bool startExist = false;
+    bool endExist = false;
 
     //check to see if start and end words are in the dict
     for (list<string>::iterator i = dict.begin(); i != dict.end(); ++i) {
@@ -82,76 +130,20 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         cout << "ERROR: The start word does not exist in the dictionary" << endl;
         return;
     }
-
+    
     if (!endExist) {
         cout << "ERROR: The end word does not exist in the dictionary" << endl;
         return;
     }
     
+    //create a stack
+    stack<string> s;
+    s.push(start);
 
-    //loop for finding a word ladder
-    while (!q.empty()) {
-
-        //get the word on top of the front stack of the queue
-        currWord = q.front().top();
-        //iterate through dict
-        for (list<string>::iterator i = dict.begin(); i != dict.end(); ++i) {
-            int numDiff = 0;
-            string dictWord = *i;
-            // comparing the top word from the stack to each word in dict
-            for (unsigned int j = 0; j < currWord.size(); ++j) {
-                // comparing letters of the word in the dict to the top word
-                if (dictWord.at(j) != currWord.at(j)) {
-                    numDiff += 1;
-                }
-            }
-            if (numDiff == 1) {
-                // if dict word is off by just 1 letter from top word
-                // create a copy of the front stack
-                stack<string> newStack;
-                newStack = q.front();
-                newStack.push(currWord);
-
-                //if that word is the end of the word ladder
-                //output word ladder to file
-                if (currWord == end) {
-                    string word;
-                    vector<string> wordVec;
-
-                    outFS.open(outputFile);
-
-                    if (!outFS.is_open()) {
-                        cout << "Error opening " << outputFile << endl;
-                        return;
-                    }
-
-                    // add words from the stack into a vector to print in reverse
-                    while (!newStack.empty()) {
-                        word = newStack.top();
-                        wordVec.push_back(word);
-                        newStack.pop();
-                    }
-
-                    // iterating through vector and outputting to file the words in reverse
-                    for (unsigned int i = wordVec.size() - 1; i >= 0; --i) {
-                        outFS << wordVec.at(i) << endl;
-                    }
-                    outFS.close();
-                    return;
-
-                }
-                else {
-                    q.push(newStack);
-                    dict.remove(currWord);
-                }
-            }
-
-        }
-        q.pop();
+    if(findLadder(s,end)){
+        output(s,outFS);
     }
-    if (q.empty()) {
-        cout << "No Word Ladder Found." << endl;
-        return;
+    else {
+        outFS << "No Word Ladder Found." << endl;
     }
-    return;
 }
