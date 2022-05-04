@@ -1,4 +1,4 @@
-#include "arithmeticExpression.h"
+#include <arithmeticExpression.h>
 #include <stack>
 #include <fstream>
 #include <sstream>
@@ -6,40 +6,29 @@
 arithmeticExpression::arithmeticExpression(const string &expr)
 {
     infixExpression = expr;
-    root = nullptr;
 }
 
 void arithmeticExpression::buildTree()
 {
     stack<TreeNode> tree;
+    TreeNode* node1;
+    TreeNode* node2;
+
     infixExpression = infix_to_postfix(); //converts infix to postfix
     char key = 'a';
-    
-    TreeNode* current(0), *top1(0), *top2(0);
-
     for (unsigned i = 0; i < infixExpression.size(); ++i) //loop through postfix
     {
-        cout << "for loop entered" << endl;
-        current = new TreeNode(infixExpression.at(i), key);
-        cout << "1" << endl;
-        top1 = &tree.top();
-        cout << "2" << endl;
-        tree.pop();
-        cout << "3" << endl;
-        top2 = &tree.top();
-        cout << "4" << endl;
-        tree.pop();
-        cout << "5" << endl;
-        current->left = top1;
-        cout << "6" << endl;
-        current->right = top2;
-        cout << "7" << endl;
-        tree.push(*current);
-        if (key == 'a') //if key is a, node is root
+        if (infixExpression.at(i) != ' ') //ignore spaces
         {
-            root = &tree.top();
+            tree.push(TreeNode(infixExpression.at(i), key)); //create node with value and key and add it to tree stack
+            if (key == 'a') //if key is a, node is root
+            {
+                root = &tree.top();
+            }
+            node1 = tree.top();
+            n
+            ++key; //increment key
         }
-        ++key; //increment key
     }
 }
 
@@ -133,28 +122,21 @@ void arithmeticExpression::infix(TreeNode *Node)
 {
     if (root != nullptr)
     {
-        cout << "(";
-        infix(root->left);
-        cout << root->data;
-        infix(root->right);
-        if (root->right != nullptr)
-        {
-            cout << ")";
-        }
+
     }
 }
 
 void arithmeticExpression::prefix(TreeNode *Node)
 {
-    return;
+
 }
 
 void arithmeticExpression::postfix(TreeNode *Node)
 {
-    return;
+
 }
 
 void arithmeticExpression::visualizeTree(ofstream &file, TreeNode *root)
 {
-    return;
+
 }
