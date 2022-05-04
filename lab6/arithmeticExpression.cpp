@@ -1,3 +1,5 @@
+//https://www.geeksforgeeks.org/expression-tree/
+//https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
 #include "arithmeticExpression.h"
 #include <stack>
 #include <fstream>
@@ -14,40 +16,31 @@ void arithmeticExpression::buildTree()
     stack<TreeNode> tree;
     infixExpression = infix_to_postfix(); //converts infix to postfix
     char key = 'a';
+    bool rootCheck = true;
     
-    TreeNode* current(0), *top1(0), *top2(0);
+    TreeNode* current(nullptr), *top1(nullptr), *top2(nullptr);
 
     for (unsigned i = 0; i < infixExpression.size(); ++i) //loop through postfix
     {
-        if (priority(infixExpression.at(i)) != 0)
+        current = new TreeNode(infixExpression.at(i), key);
+        
+        if (priority(infixExpression.at(i)) > 0)
         {
-            cout << "for loop entered" << endl;
-            current = new TreeNode(infixExpression.at(i), key);
-            cout << "1" << endl;
-            if (top1 != nullptr)
-            {
             top1 = &tree.top();
-            cout << "2" << endl;
             tree.pop();
-            cout << "3" << endl;
-            }
-            if (top2 != nullptr)
-            {
             top2 = &tree.top();
-            cout << "4" << endl;
             tree.pop();
-            }
-            cout << "5" << endl;
-            current->left = top1;
-            cout << "6" << endl;
-            current->right = top2;
-            cout << "7" << endl;
-            tree.push(*current);
-            if (key == 'a') //if key is a, node is root
+            current->left = top2;
+            current->right = top1;
+            if (rootCheck)
             {
-                root = &tree.top();
+                root = current;
             }
+            rootCheck = false;
         }
+
+        tree.push(*current);
+
         ++key; //increment key
     }
 }
@@ -138,18 +131,22 @@ void arithmeticExpression::visualizeTree(const string &outputFilename){
     system(command.c_str());
 }
 
-void arithmeticExpression::infix(TreeNode *Node)
+void arithmeticExpression::infix(TreeNode *node)
 {
-    if (root != nullptr)
+    if (node == nullptr)
+    {
+        return;
+    }
+    else
     {
         cout << "(";
-        infix(root->left);
-        cout << root->data;
-        infix(root->right);
-        if (root->right != nullptr)
-        {
-            cout << ")";
-        }
+        infix(node->left);
+        cout << node->data;
+        infix(node->right);
+        //if (Node->right != nullptr)
+        //{
+          //  cout << ")";
+        //}
     }
 }
 
