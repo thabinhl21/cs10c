@@ -19,25 +19,34 @@ void arithmeticExpression::buildTree()
 
     for (unsigned i = 0; i < infixExpression.size(); ++i) //loop through postfix
     {
-        cout << "for loop entered" << endl;
-        current = new TreeNode(infixExpression.at(i), key);
-        cout << "1" << endl;
-        top1 = &tree.top();
-        cout << "2" << endl;
-        tree.pop();
-        cout << "3" << endl;
-        top2 = &tree.top();
-        cout << "4" << endl;
-        tree.pop();
-        cout << "5" << endl;
-        current->left = top1;
-        cout << "6" << endl;
-        current->right = top2;
-        cout << "7" << endl;
-        tree.push(*current);
-        if (key == 'a') //if key is a, node is root
+        if (priority(infixExpression.at(i)) != 0)
         {
-            root = &tree.top();
+            cout << "for loop entered" << endl;
+            current = new TreeNode(infixExpression.at(i), key);
+            cout << "1" << endl;
+            if (top1 != nullptr)
+            {
+            top1 = &tree.top();
+            cout << "2" << endl;
+            tree.pop();
+            cout << "3" << endl;
+            }
+            if (top2 != nullptr)
+            {
+            top2 = &tree.top();
+            cout << "4" << endl;
+            tree.pop();
+            }
+            cout << "5" << endl;
+            current->left = top1;
+            cout << "6" << endl;
+            current->right = top2;
+            cout << "7" << endl;
+            tree.push(*current);
+            if (key == 'a') //if key is a, node is root
+            {
+                root = &tree.top();
+            }
         }
         ++key; //increment key
     }
