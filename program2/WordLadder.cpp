@@ -42,9 +42,9 @@ TO-DO:
 */
 void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
     string currWord;
-    bool startExist = true;
-    bool endExist = true;
-
+    bool startExist = false;
+    bool endExist = false;
+    ofstream outFS;
     //create a stack
     stack<string> s;
     //create a queue of stacks
@@ -55,13 +55,26 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     //add stack to queue
     q.push(s);
 
+
+    //if same word for start and end
+    if (start == end) {
+        outFS.open(outputFile);
+        if (!outFS.is_open()) {
+            cout << "Error opening " << outputFile << endl;
+            return;
+        }
+        outFS << start << endl;
+        outFS.close();
+        return;
+    }
+
     //check to see if start and end words are in the dict
     for (list<string>::iterator i = dict.begin(); i != dict.end(); ++i) {
-        if (start != *i) {
-            startExist = false;
+        if (start == *i) {
+            startExist = true;
         }
-        if (end != *i) {
-            endExist = false;
+        if (end == *i) {
+            endExist = true;
         }
     }
 
@@ -74,6 +87,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         cout << "ERROR: The end word does not exist in the dictionary" << endl;
         return;
     }
+    
 
     //loop for finding a word ladder
     while (!q.empty()) {
@@ -101,7 +115,6 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                 //if that word is the end of the word ladder
                 //output word ladder to file
                 if (currWord == end) {
-                    ofstream outFS;
                     string word;
                     vector<string> wordVec;
 
@@ -120,10 +133,11 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                     }
 
                     // iterating through vector and outputting to file the words in reverse
-                    for (unsigned int i = wordVec.size() - 1; i >= 0; ++i) {
+                    for (unsigned int i = wordVec.size() - 1; i >= 0; --i) {
                         outFS << wordVec.at(i) << endl;
                     }
                     outFS.close();
+                    return;
 
                 }
                 else {
@@ -136,6 +150,8 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         q.pop();
     }
     if (q.empty()) {
-
+        cout << "No Word Ladder Found." << endl;
+        return;
     }
+    return;
 }
