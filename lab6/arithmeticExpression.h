@@ -9,7 +9,7 @@ struct TreeNode{
     char key;
     TreeNode* left;
     TreeNode* right;
-    TreeNode(char data, char key):data(data),key(key),left(0),right(0){}
+    TreeNode(char data, char key):data(data),key(key),left(nullptr),right(nullptr){}
 };
 
 class arithmeticExpression{
