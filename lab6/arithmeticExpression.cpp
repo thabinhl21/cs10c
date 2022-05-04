@@ -27,6 +27,21 @@ void arithmeticExpression::buildTree()
     }
 }
 
+void arithmeticExpression::infix()
+{
+    infix(root);
+}
+
+void arithmeticExpression::prefix()
+{
+    prefix(root);
+}
+
+void arithmeticExpression::postfix()
+{
+    postfix(root);
+}
+
 int arithmeticExpression::priority(char op){
     int priority = 0;
     if(op == '('){
@@ -96,4 +111,27 @@ void arithmeticExpression::visualizeTree(const string &outputFilename){
     string jpgFilename = outputFilename.substr(0,outputFilename.size()-4)+".jpg";
     string command = "dot -Tjpg " + outputFilename + " -o " + jpgFilename;
     system(command.c_str());
+}
+
+void arithmeticExpression::infix(TreeNode *Node)
+{
+    if (root != nullptr)
+    {
+
+    }
+}
+
+void arithmeticExpression::prefix(TreeNode *Node)
+{
+
+}
+
+void arithmeticExpression::postfix(TreeNode *Node)
+{
+
+}
+
+void arithmeticExpression::visualizeTree(ofstream &file, TreeNode *root)
+{
+
 }
