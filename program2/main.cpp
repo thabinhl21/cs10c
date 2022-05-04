@@ -35,7 +35,7 @@ int main() {
    }
    
 	WordLadder wl(dictFile);
-	
+	//cout << "hello" << endl;
 	wl.outputLadder(wordBegin, wordEnd, outFile);
 
    return 0;

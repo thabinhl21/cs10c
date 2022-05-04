@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include <stack>
 
 using namespace std;
 
@@ -10,7 +11,10 @@ class WordLadder {
 
   private:
     list<string> dict;        //list of possible words in ladder
-
+  private:
+	bool offByOne(const string &s1, const string &s2) const;
+	bool findLadder(stack<string> &s, const string &end);
+	void output(stack<string> &, ostream &) const;
   public:
     /* Passes in the name of a file that contains a dictionary of 5-letter words.
        Fills the list (dict) with the words within this file. 
@@ -29,6 +33,7 @@ class WordLadder {
        to the file, the message, "No Word Ladder Found."
     */
     void outputLadder(const string &start, const string &end, const string &outputFile);
+
 };
 
 #endif
