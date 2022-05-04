@@ -20,20 +20,16 @@ void arithmeticExpression::buildTree()
     for (unsigned i = 0; i < infixExpression.size(); ++i) //loop through postfix
     {
         current = new TreeNode(infixExpression.at(i), key);
-        cout << "1" << endl;
         
         if (top1 != nullptr)
         {
             top1 = &tree.top();
-            cout << "2" << endl;
             tree.pop();
-            cout << "3" << endl;
         }
         
         if (top2 != nullptr)
         {
             top2 = &tree.top();
-            cout << "4" << endl;
             tree.pop();
         }
         
