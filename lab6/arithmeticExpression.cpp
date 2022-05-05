@@ -143,13 +143,13 @@ void arithmeticExpression::infix(TreeNode *node)
     }
     else
     {
-        if (node->left != nullptr && priority(node->data) > 1) {
+        if (node->left != nullptr && (priority(node->data) > priority(node->left->data))) {
             cout << "(";
         }
         infix(node->left);
         cout << node->data;
         infix(node->right);
-        if (node->right != nullptr && priority(node->data) > 1) {
+        if (node->right != nullptr && (priority(node->data) > priority(node->right->data))) {
             cout << ")";
         }
     }
