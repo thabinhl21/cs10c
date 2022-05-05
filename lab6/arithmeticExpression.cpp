@@ -1,5 +1,6 @@
-//https://www.geeksforgeeks.org/expression-tree/
-//https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
+// https://www.geeksforgeeks.org/expression-tree/
+// https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
+// https://nirav.com.np/2019/12/08/visualize-c-data-structures-using-graphviz-and-dot-language.html
 #include "arithmeticExpression.h"
 #include <stack>
 #include <fstream>
@@ -120,21 +121,6 @@ string arithmeticExpression::infix_to_postfix(){
     return oss.str();
 }
 
-void arithmeticExpression::visualizeTree(const string &outputFilename){
-    ofstream outFS(outputFilename.c_str());
-    if(!outFS.is_open()){
-        cout<<"Error opening "<< outputFilename<<endl;
-        return;
-    }
-    outFS<<"digraph G {"<<endl;
-    visualizeTree(outFS,root);
-    outFS<<"}";
-    outFS.close();
-    string jpgFilename = outputFilename.substr(0,outputFilename.size()-4)+".jpg";
-    string command = "dot -Tjpg " + outputFilename + " -o " + jpgFilename;
-    system(command.c_str());
-}
-
 void arithmeticExpression::infix(TreeNode *node)
 {
     // if (node == nullptr)
@@ -153,12 +139,31 @@ void arithmeticExpression::infix(TreeNode *node)
     //         cout << ")";
     //     }
     // }
-    if (node) {
-        cout << "(";
+
+
+    // if (node) {
+    //     cout << "(";
+    //     infix(node->left);
+    //     cout << node->data;
+    //     infix(node->right);
+    //     cout << ")";
+    // }
+
+    if (node != nullptr)
+    {
+        if (node->left != nullptr)
+        {
+            cout << '(';
+        }
+
         infix(node->left);
         cout << node->data;
         infix(node->right);
-        cout << ")";
+
+        if (node->right != nullptr)
+        {
+            cout << ')';
+        }
     }
 
 }
@@ -191,7 +196,37 @@ void arithmeticExpression::postfix(TreeNode *node)
     }
 }
 
-void arithmeticExpression::visualizeTree(ofstream &file, TreeNode *root)
+void arithmeticExpression::visualizeTree(const string &outputFilename){
+    ofstream outFS(outputFilename.c_str());
+    if(!outFS.is_open()){
+        cout<<"Error opening "<< outputFilename<<endl;
+        return;
+    }
+    outFS<<"digraph G {"<<endl;
+    visualizeTree(outFS,root);
+    outFS<<"}";
+    outFS.close();
+    string jpgFilename = outputFilename.substr(0,outputFilename.size()-4)+".jpg";
+    string command = "dot -Tjpg " + outputFilename + " -o " + jpgFilename;
+    system(command.c_str());
+}
+
+void arithmeticExpression::visualizeTree(ofstream &out, TreeNode *node)
 {
-    return;
+    if (node != nullptr) {
+        if (node->left != nullptr) {
+            // visualizes parent node in light blue
+            out << node->key << "[color = lightblue, style = filled, label= " << "\"" << node->data << "\"" << "];" << endl;
+            //visualizes left child of parent node in light blue
+            out << node->left->key << "[color = lightblue, style = filled, label= " << "\"" << node->left->data << "\"" << "];" << endl; 
+            out << node->key << "->" << node->left->key << endl; // visualizes edge
+            visualizeTree(out, node->left);
+        }
+        if (node->right != nullptr) {
+            out << node->key << "[color = lightblue, style = filled, label= " << "\"" << node->data << "\"" << "];" << endl;
+            out << node->right->key << "[color = lightblue, style = filled, label= " << "\"" << node->right->data << "\"" << "];" << endl;
+            out << node->key << "->" << node->right->key << endl; // visualizes edge
+            visualizeTree(out, node->right);
+        }
+    }
 }

@@ -1,0 +1,20 @@
+digraph G {
+g[color = lightblue, style = filled, label= "*"];
+c[color = lightblue, style = filled, label= "+"];
+g->c
+c[color = lightblue, style = filled, label= "+"];
+a[color = lightblue, style = filled, label= "a"];
+c->a
+c[color = lightblue, style = filled, label= "+"];
+b[color = lightblue, style = filled, label= "b"];
+c->b
+g[color = lightblue, style = filled, label= "*"];
+f[color = lightblue, style = filled, label= "-"];
+g->f
+f[color = lightblue, style = filled, label= "-"];
+d[color = lightblue, style = filled, label= "c"];
+f->d
+f[color = lightblue, style = filled, label= "-"];
+e[color = lightblue, style = filled, label= "d"];
+f->e
+}

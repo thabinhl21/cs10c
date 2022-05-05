@@ -1,0 +1,38 @@
+digraph G {
+m[color = lightblue, style = filled, label= "-"];
+e[color = lightblue, style = filled, label= "+"];
+m->e
+e[color = lightblue, style = filled, label= "+"];
+a[color = lightblue, style = filled, label= "a"];
+e->a
+e[color = lightblue, style = filled, label= "+"];
+d[color = lightblue, style = filled, label= "*"];
+e->d
+d[color = lightblue, style = filled, label= "*"];
+b[color = lightblue, style = filled, label= "b"];
+d->b
+d[color = lightblue, style = filled, label= "*"];
+c[color = lightblue, style = filled, label= "c"];
+d->c
+m[color = lightblue, style = filled, label= "-"];
+l[color = lightblue, style = filled, label= "*"];
+m->l
+l[color = lightblue, style = filled, label= "*"];
+j[color = lightblue, style = filled, label= "+"];
+l->j
+j[color = lightblue, style = filled, label= "+"];
+h[color = lightblue, style = filled, label= "*"];
+j->h
+h[color = lightblue, style = filled, label= "*"];
+f[color = lightblue, style = filled, label= "d"];
+h->f
+h[color = lightblue, style = filled, label= "*"];
+g[color = lightblue, style = filled, label= "e"];
+h->g
+j[color = lightblue, style = filled, label= "+"];
+i[color = lightblue, style = filled, label= "f"];
+j->i
+l[color = lightblue, style = filled, label= "*"];
+k[color = lightblue, style = filled, label= "g"];
+l->k
+}
