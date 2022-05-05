@@ -50,9 +50,7 @@ void arithmeticExpression::buildTree()
 
 void arithmeticExpression::infix()
 {
-    cout << "(";
     infix(root);
-    cout << ")";
 }
 
 void arithmeticExpression::prefix()
