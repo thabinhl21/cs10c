@@ -137,21 +137,28 @@ void arithmeticExpression::visualizeTree(const string &outputFilename){
 
 void arithmeticExpression::infix(TreeNode *node)
 {
-    if (node == nullptr)
-    {
-        return;
-    }
-    else
-    {
-        if (node->left != nullptr && (priority(node->data) > priority(node->left->data))) {
-            cout << "(";
-        }
+    // if (node == nullptr)
+    // {
+    //     return;
+    // }
+    // else
+    // {
+    //     if (node->left != nullptr && (priority(node->data) > priority(node->left->data))) {
+    //         cout << "(";
+    //     }
+    //     infix(node->left);
+    //     cout << node->data;
+    //     infix(node->right);
+    //     if (node->right != nullptr && (priority(node->data) > priority(node->right->data))) {
+    //         cout << ")";
+    //     }
+    // }
+    if (node) {
+        cout << "(";
         infix(node->left);
         cout << node->data;
         infix(node->right);
-        if (node->right != nullptr && (priority(node->data) > priority(node->right->data))) {
-            cout << ")";
-        }
+        cout << ")";
     }
 
 }
