@@ -1,11 +1,55 @@
 #include "AVLTREE.h"
-#include <iostream>
 #include <fstream>
 #include <string>
 
+AVLTree::AVLTree()
+{
+    root = nullptr;
+}
+
 void AVLTree::insert(const string &item)
 {
+    Node* newNode = new Node(item);
 
+    if (root == nullptr)
+    {
+        root = newNode; //set root to newly inserted node if tree is empty
+        return;
+    }
+
+    Node* cur = root;
+    while (cur != nullptr)
+    {
+        if (newNode->data < cur->data)
+        {
+            if (cur->left == nullptr)
+            {
+                cur->left = newNode;
+                newNode->parent = cur;
+                cur = nullptr;
+            }
+        }
+        else
+        {
+            if (cur->right == nullptr)
+            {
+                cur->right = newNode;
+                newNode->parent = cur;
+                cur = nullptr;
+            }
+            else
+            {
+                cur = cur->right;
+            }
+        }
+        newNode = newNode->parent;
+
+        while (newNode != nullptr)
+        {
+            rebalance(newNode);
+            newNode = newNode->parent;
+        }
+    }
 }
 
 int AVLTree::balanceFactor(Node* node)
@@ -35,6 +79,11 @@ void AVLTree::visualizeTree(const string &outputFilename) {
 
 
 Node* AVLTree::findUnbalancedNode()
+{
+
+}
+
+void AVLTree::rebalance(Node* node)
 {
 
 }

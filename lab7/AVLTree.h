@@ -21,6 +21,8 @@ private:
 //Find and return the closest unbalanced node (with balance factor of 2 or -2) to the inserted node.
 Node* findUnbalancedNode();
 
+void rebalance(Node*);
+
 //Implement four possible imbalance cases and update the parent of the given node.
 void rotate();
 
@@ -33,6 +35,8 @@ Node* rotateRight();
 void printBalanceFactors(Node*);
 
 void visualizeTree(ofstream &, Node *);
+
+Node* root;
 
 };
 

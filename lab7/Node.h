@@ -2,7 +2,8 @@
 #define __NODE_H
 
 #include <iostream>
-#include <string>
+
+using namespace std;
 
 class Node {
 public:
@@ -14,7 +15,9 @@ Node* left;
 
 Node* right;
 
-Node(string data): data(data), height(0), left(nullptr), right(nullptr) {}
+Node* parent;
+
+Node(string data): data(data), height(0), left(nullptr), right(nullptr), parent(nullptr) {}
 };
 
 #endif
