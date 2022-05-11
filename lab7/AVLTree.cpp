@@ -100,6 +100,7 @@ Node* AVLTree::findUnbalancedNode(Node* node)
             node = node->parent;
         }
     }
+    return nullptr;
 }
 
 void AVLTree::rotate()
