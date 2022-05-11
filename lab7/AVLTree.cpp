@@ -103,7 +103,7 @@ Node* AVLTree::rotateRight()
 
 }
 
-void AVLTree::printBalanceFactors(Node*)
+void AVLTree::printBalanceFactors(Node* node)
 {
 
 }
