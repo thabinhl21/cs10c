@@ -70,7 +70,8 @@ int AVLTree::balanceFactor(Node* node)
 
 void AVLTree::printBalanceFactors()
 {
-
+    printBalanceFactors(root);
+    cout << endl;
 }
 
 void AVLTree::visualizeTree(const string &outputFilename) {
@@ -91,7 +92,6 @@ void AVLTree::visualizeTree(const string &outputFilename) {
 
 Node* AVLTree::findUnbalancedNode(Node* node)
 {
-
 }
 
 void AVLTree::rotate()
@@ -132,9 +132,13 @@ Node* AVLTree::rotateRight(Node* node)
     SetChild(node, "left", leftRightChild);
 }
 
-void AVLTree::printBalanceFactors(Node*)
+void AVLTree::printBalanceFactors(Node* node)
 {
-
+    if (node != nullptr) {
+        printBalanceFactors(node->left);
+        cout << node->data << "(" << balanceFactor(node) << "), ";
+        printBalanceFactors(node->right);
+    }
 }
 
 void AVLTree::updateHeight(Node* node)
