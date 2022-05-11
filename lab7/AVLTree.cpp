@@ -46,7 +46,7 @@ void AVLTree::insert(const string &item)
 
         while (newNode != nullptr)
         {
-            rebalance(newNode);
+            // FIXME:rebalance(newNode);
             newNode = newNode->parent;
         }
     }
@@ -54,12 +54,24 @@ void AVLTree::insert(const string &item)
 
 int AVLTree::balanceFactor(Node* node)
 {
+    int leftHeight = -1;
+    if (node->left != nullptr)
+    {
+        leftHeight = node->left->height;
+    }
     
+    int rightHeight = -1;
+    if (node->right != nullptr)
+    {
+        rightHeight = node->right->height;
+    }
+    return leftHeight - rightHeight; //subtract right subtree height from left subtree height to get node's balance factor
 }
 
 void AVLTree::printBalanceFactors()
 {
-
+    printBalanceFactors(root);
+    cout << endl;
 }
 
 void AVLTree::visualizeTree(const string &outputFilename) {
@@ -78,12 +90,7 @@ void AVLTree::visualizeTree(const string &outputFilename) {
 }
 
 
-Node* AVLTree::findUnbalancedNode()
-{
-
-}
-
-void AVLTree::rebalance(Node* node)
+Node* AVLTree::findUnbalancedNode(Node* node)
 {
 
 }
@@ -93,19 +100,46 @@ void AVLTree::rotate()
 
 }
 
-Node* AVLTree::rotateLeft()
+Node* AVLTree::rotateLeft(Node* node)
 {
 
 }
 
-Node* AVLTree::rotateRight()
+Node* AVLTree::rotateRight(Node* node)
 {
-
+    Node* leftRightChild = node->left->right;
+    if (node->parent != nullptr)
+    {
+        //replace child node
+        if (node->parent->left == node)
+        {
+            //set child
+        }
+        else if (node->parent->right == node)
+        {
+            //set child
+        }
+        else
+        {
+            return;
+        }
+    }
+    else //tree is root
+    {
+        root = node->left;
+        root->parent = nullptr;
+    }
+        //set child node
+        //set child node
 }
 
 void AVLTree::printBalanceFactors(Node* node)
 {
-
+    if (node != nullptr) {
+        printBalanceFactors(node->left);
+        cout << node->data << "(" << balanceFactor(node) << "), ";
+        printBalanceFactors(node->right);
+    }
 }
 
 void AVLTree::visualizeTree(ofstream & outFS, Node *n){

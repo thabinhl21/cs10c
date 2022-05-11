@@ -19,18 +19,16 @@ void visualizeTree(const string &);
 
 private:
 //Find and return the closest unbalanced node (with balance factor of 2 or -2) to the inserted node.
-Node* findUnbalancedNode();
-
-void rebalance(Node*);
+Node* findUnbalancedNode(Node*);
 
 //Implement four possible imbalance cases and update the parent of the given node.
 void rotate();
 
 //Rotate the subtree to left at the given node and returns the new subroot.
-Node* rotateLeft();
+Node* rotateLeft(Node*);
 
 //Rotate the subtree to right at the given node and returns the new subroot.
-Node* rotateRight();
+Node* rotateRight(Node*);
 
 void printBalanceFactors(Node*);
 
