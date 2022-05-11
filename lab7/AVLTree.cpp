@@ -20,13 +20,21 @@ void AVLTree::insert(const string &item)
     Node* cur = root;
     while (cur != nullptr)
     {
-        if (newNode->data < cur->data)
+        if (newNode->data == cur->data) //zybooks seems to not want duplicate data (strings) in tree
+        {
+            return;
+        }
+        else if (newNode->data < cur->data)
         {
             if (cur->left == nullptr)
             {
                 cur->left = newNode;
                 newNode->parent = cur;
                 cur = nullptr;
+            }
+            else
+            {
+                cur = cur->left;
             }
         }
         else
@@ -42,12 +50,12 @@ void AVLTree::insert(const string &item)
                 cur = cur->right;
             }
         }
-        newNode = newNode->parent;
+        Node* check = newNode->parent; //check if tree needs to be rebalanced
 
-        while (newNode != nullptr)
+        while (check != nullptr)
         {
-            rotate(newNode);
-            newNode = newNode->parent;
+            rotate(check); //rebalance
+            check = check->parent;
         }
     }
 }
@@ -133,11 +141,12 @@ Node* AVLTree::rotateLeft(Node* node)
     {
         ReplaceChild(node->parent, node, node->right);
     }
-    else //tree is root
+    else //node is root
     {
         root = node->right;
         root->parent = nullptr;
     }
+
     SetChild(node->right, "left", node);
     SetChild(node, "right", rightLeftChild);
     return node->parent;
@@ -155,6 +164,7 @@ Node* AVLTree::rotateRight(Node* node)
         root = node->left;
         root->parent = nullptr;
     }
+
     SetChild(node->left, "right", node);
     SetChild(node, "left", leftRightChild);
     return node->parent;
