@@ -34,6 +34,12 @@ void printBalanceFactors(Node*);
 
 void visualizeTree(ofstream &, Node *);
 
+void updateHeight(Node*); //new
+
+void SetChild(Node*, Node*, Node*); //new
+
+void ReplaceChild(Node*, Node*, Node*); //new
+
 Node* root;
 
 };

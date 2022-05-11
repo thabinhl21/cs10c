@@ -137,6 +137,21 @@ void AVLTree::printBalanceFactors(Node*)
 
 }
 
+void AVLTree::updateHeight(Node*)
+{
+
+}
+
+void AVLTree::SetChild(Node*, Node*, Node*)
+{
+
+}
+
+void AVLTree::ReplaceChild(Node*, Node*, Node*)
+{
+    
+}
+
 void AVLTree::visualizeTree(ofstream & outFS, Node *n){
     if(n){
         if(n->left){
