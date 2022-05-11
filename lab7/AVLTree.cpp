@@ -92,6 +92,14 @@ void AVLTree::visualizeTree(const string &outputFilename) {
 
 Node* AVLTree::findUnbalancedNode(Node* node)
 {
+    while (node != nullptr) {
+        if (balanceFactor(node) == -2 || balanceFactor(node) == 2) {
+            return node;
+        }
+        else {
+            node = node->parent;
+        }
+    }
 }
 
 void AVLTree::rotate()
