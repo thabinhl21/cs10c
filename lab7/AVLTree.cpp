@@ -46,7 +46,7 @@ void AVLTree::insert(const string &item)
 
         while (newNode != nullptr)
         {
-            // FIXME:rebalance(newNode);
+            updateHeight(newNode);
             newNode = newNode->parent;
         }
     }
@@ -104,7 +104,7 @@ Node* AVLTree::findUnbalancedNode(Node* node)
 
 void AVLTree::rotate()
 {
-
+    return;
 }
 
 Node* AVLTree::rotateLeft(Node* node)
@@ -121,7 +121,6 @@ Node* AVLTree::rotateLeft(Node* node)
     }
     SetChild(node->right, "left", node);
     SetChild(node, "right", rightLeftChild);
-
 }
 
 Node* AVLTree::rotateRight(Node* node)
