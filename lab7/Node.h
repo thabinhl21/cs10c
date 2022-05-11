@@ -7,9 +7,9 @@ using namespace std;
 
 class Node {
 public:
-int height;
-
 string data;
+
+int height;
 
 Node* left;
 

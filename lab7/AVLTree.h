@@ -5,6 +5,8 @@
 
 class AVLTree {
 public:
+AVLTree();
+
 //Insert an item to the binary search tree and perform rotation if necessary.
 void insert(const string &);
 

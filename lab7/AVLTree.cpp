@@ -1,4 +1,4 @@
-#include "AVLTREE.h"
+#include "AVLTree.h"
 #include <fstream>
 #include <string>
 
