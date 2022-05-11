@@ -46,7 +46,7 @@ void AVLTree::insert(const string &item)
 
         while (newNode != nullptr)
         {
-            updateHeight(newNode);
+            rotate(newNode);
             newNode = newNode->parent;
         }
     }
@@ -103,9 +103,26 @@ Node* AVLTree::findUnbalancedNode(Node* node)
     return nullptr;
 }
 
-void AVLTree::rotate()
+Node* AVLTree::rotate(Node* node)
 {
-    return;
+    updateHeight(node);
+    if (balanceFactor(node) == -2)
+    {
+        if (balanceFactor(node->right) == 1)
+        {
+            rotateRight(node->right);
+        }
+        return rotateLeft(node);
+    }
+    else if (balanceFactor(node) == 2)
+    {
+        if (balanceFactor(node->left) == -1)
+        {
+            rotateLeft(node->left);
+        }
+        return rotateRight(node);
+    }
+    return node;
 }
 
 Node* AVLTree::rotateLeft(Node* node)
@@ -122,6 +139,7 @@ Node* AVLTree::rotateLeft(Node* node)
     }
     SetChild(node->right, "left", node);
     SetChild(node, "right", rightLeftChild);
+    return node->parent;
 }
 
 Node* AVLTree::rotateRight(Node* node)
@@ -138,6 +156,7 @@ Node* AVLTree::rotateRight(Node* node)
     }
     SetChild(node->left, "right", node);
     SetChild(node, "left", leftRightChild);
+    return node->parent;
 }
 
 void AVLTree::printBalanceFactors(Node* node)

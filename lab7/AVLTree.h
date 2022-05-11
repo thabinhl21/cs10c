@@ -24,7 +24,7 @@ private:
 Node* findUnbalancedNode(Node*);
 
 //Implement four possible imbalance cases and update the parent of the given node.
-void rotate();
+Node* rotate(Node*);
 
 //Rotate the subtree to left at the given node and returns the new subroot.
 Node* rotateLeft(Node*);
