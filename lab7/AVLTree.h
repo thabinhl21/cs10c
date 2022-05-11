@@ -36,7 +36,7 @@ void visualizeTree(ofstream &, Node *);
 
 void updateHeight(Node*); //new
 
-void SetChild(Node*, Node*, Node*); //new
+void SetChild(Node*, string, Node*); //new
 
 void ReplaceChild(Node*, Node*, Node*); //new
 
