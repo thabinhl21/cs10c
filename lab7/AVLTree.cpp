@@ -109,6 +109,18 @@ void AVLTree::rotate()
 
 Node* AVLTree::rotateLeft(Node* node)
 {
+    Node* rightLeftChild = node->right->left;
+    if (node->parent != nullptr)
+    {
+        ReplaceChild(node->parent, node, node->right);
+    }
+    else //tree is root
+    {
+        root = node->right;
+        root->parent = nullptr;
+    }
+    SetChild(node->right, "left", node);
+    SetChild(node, "right", rightLeftChild);
 
 }
 
@@ -117,27 +129,15 @@ Node* AVLTree::rotateRight(Node* node)
     Node* leftRightChild = node->left->right;
     if (node->parent != nullptr)
     {
-        //replace child node
-        if (node->parent->left == node)
-        {
-            //set child
-        }
-        else if (node->parent->right == node)
-        {
-            //set child
-        }
-        else
-        {
-            return;
-        }
+        ReplaceChild(node->parent, node, node->left);
     }
     else //tree is root
     {
         root = node->left;
         root->parent = nullptr;
     }
-        //set child node
-        //set child node
+    SetChild(node->left, "right", node);
+    SetChild(node, "left", leftRightChild);
 }
 
 void AVLTree::printBalanceFactors(Node* node)
@@ -146,6 +146,59 @@ void AVLTree::printBalanceFactors(Node* node)
         printBalanceFactors(node->left);
         cout << node->data << "(" << balanceFactor(node) << "), ";
         printBalanceFactors(node->right);
+    }
+}
+
+void AVLTree::updateHeight(Node* node)
+{
+    int leftHeight = -1;
+    if (node->left != nullptr)
+    {
+        leftHeight = node->left->height;
+    }
+
+    int rightHeight = -1;
+    if (node->right != nullptr)
+    {
+        rightHeight = node->right->height;
+    }
+    node->height = max(leftHeight, rightHeight) + 1; //returns larger value + 1
+}
+
+void AVLTree::SetChild(Node* parent, string whichChild, Node* child)
+{
+    if (whichChild != "left" && whichChild != "right")
+    {
+        return;
+    }
+    if (whichChild == "left")
+    {
+        parent->left = child;
+    }
+    else
+    {
+        parent->right = child;
+    }
+    if (child != nullptr)
+    {
+        child->parent = parent;
+    }
+    updateHeight(parent);
+}
+
+void AVLTree::ReplaceChild(Node* parent, Node* currentChild, Node* newChild)
+{
+    if (parent->left == currentChild)
+    {
+        SetChild(parent, "left", newChild);
+    }  
+    else if (parent->right == currentChild)
+    {
+        SetChild(parent, "right", newChild);
+    }
+    else
+    {
+        return;
     }
 }
 
