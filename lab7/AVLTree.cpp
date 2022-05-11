@@ -106,6 +106,7 @@ Node* AVLTree::findUnbalancedNode(Node* node)
 Node* AVLTree::rotate(Node* node)
 {
     updateHeight(node);
+
     if (balanceFactor(node) == -2)
     {
         if (balanceFactor(node->right) == 1)
@@ -149,7 +150,7 @@ Node* AVLTree::rotateRight(Node* node)
     {
         ReplaceChild(node->parent, node, node->left);
     }
-    else //tree is root
+    else
     {
         root = node->left;
         root->parent = nullptr;
