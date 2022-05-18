@@ -5,7 +5,9 @@
 
 class BSTree {
     private:
-        Node *root;
+      Node *root;
+      
+      
     public:
         /* Constructors */
         /* Default constructor */

@@ -48,15 +48,15 @@ int BSTree::height(const string&) const {
 }
 
 void BSTree::preOrder() const {
-
+        preOrder(root);
 }
 
 void BSTree::postOrder() const {
-
+    postOrder(root);
 }
 
 void BSTree::inOrder() const {
-
+    inOrder(root);
 }
 
 
