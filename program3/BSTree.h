@@ -5,8 +5,10 @@
 
 class BSTree {
     private:
-      Node *root;
-      
+      Node* root;
+      void preOrder(Node*) const;
+      void postOrder(Node *) const;
+      void inOrder(Node *) const;
       
     public:
         /* Constructors */
