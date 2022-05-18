@@ -50,7 +50,7 @@ void BSTree::insert(const string &newString) {
 }
 
 void BSTree::remove(const string &key) {
-
+    return;
 }
 
 bool BSTree::search(const string &key) const {
@@ -112,15 +112,15 @@ Node* BSTree::searchForNode(Node* curr, const string &key) const {
 }
 
 string BSTree::largest() const {
-
+    return "";
 }
 
 string BSTree::smallest() const {
-
+    return "";
 }
 
 int BSTree::height(const string&) const {
-
+    return -1;
 }
 
 void BSTree::preOrder(Node* node) const
@@ -162,11 +162,11 @@ void BSTree::preOrder() const {
 }
 
 void BSTree::postOrder() const {
-
+    postOrder(root);
 }
 
 void BSTree::inOrder() const {
-
+    postOrder(root);
 }
 
 
