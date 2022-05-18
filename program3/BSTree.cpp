@@ -109,11 +109,15 @@ string BSTree::largest() const {
     }
 
     return curr->data;
-
 }
 
 string BSTree::smallest() const {
     Node* curr = root;
+
+    if (root == nullptr)
+    {
+        return "";
+    }
 
     while (curr->left != nullptr)
     {

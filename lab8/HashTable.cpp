@@ -7,7 +7,8 @@
 *  initialize array of lists of WordEntry
 */
 HashTable::HashTable (int s) {
-	
+	size = s;
+    hashTable = new list <WordEntry> [s];
 }
 
 
@@ -18,7 +19,19 @@ HashTable::HashTable (int s) {
 *  ensure array index doesn't go out of bounds
 */
 int HashTable::computeHash(const string &s) {
+//test case - first check if string is in table?
+    //list<WordEntry>::iterator it;
 
+    for (unsigned i = 0; i < size; ++i)
+    {
+        for (WordEntry & entry : hashTable[i])
+        {
+            if (entry.getWord() == s)
+            {
+                return i;
+            }
+        }
+    }
 }
 
 

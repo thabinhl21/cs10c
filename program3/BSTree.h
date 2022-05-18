@@ -13,6 +13,7 @@ class BSTree {
       bool searchTree(Node* curr, const string &key) const;
       Node* searchForNode(Node* curr, const string &key) const;
       Node* removeNode(Node* curr, const string &key) const;
+      Node* findMinNode(Node* curr) const;
       
     public:
         /* Constructors */
