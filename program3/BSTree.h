@@ -1,6 +1,8 @@
 #ifndef __BSTREE_H__
 #define __BSTREE_H__
 
+#include "Node.h"
+
 class BSTree {
     private:
         Node *root;

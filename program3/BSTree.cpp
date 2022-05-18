@@ -8,7 +8,7 @@ BSTree::~BSTree() {
     delete root;
 }
 
-void BSTree:insert(const string &newString) {
+void BSTree::insert(const string &newString) {
 
 }
 
