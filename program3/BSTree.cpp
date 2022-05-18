@@ -116,7 +116,14 @@ string BSTree::largest() const {
 }
 
 string BSTree::smallest() const {
-    return "";
+    Node* curr = root;
+
+    while (curr->left != nullptr)
+    {
+        curr = curr->left;
+    }
+
+    return curr->data;
 }
 
 int BSTree::height(const string& key) const {
