@@ -37,10 +37,27 @@ bool BSTree::search(const string &key) const {
     // }
 
     // return found;
+    Node* curr = root;
+    return searchTree(curr, key);
 }
 
-bool BSTree::searchTree(Node* curr, const string &key) {
+bool BSTree::searchTree(Node* curr, const string &key) const {
 
+    if (curr == nullptr) {
+        return false;
+    }
+    
+    else if (key == curr->data) {
+        return true;
+    }
+    
+    else if (key < curr->data) {
+        return searchTree(curr->left, key);
+    }
+    
+    else {
+        return searchTree(curr->right, key);
+    }
 }
 
 string BSTree::largest() const {
