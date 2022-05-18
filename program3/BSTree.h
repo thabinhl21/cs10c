@@ -67,6 +67,7 @@ class BSTree {
         void inOrder() const;
         bool searchTree(Node* curr, const string &key) const;
         Node* searchForNode(Node* curr, const string &key) const;
+        Node* removeNode(Node* curr, const string &key) const;
 };
 
 #endif // __BSTREE_H__

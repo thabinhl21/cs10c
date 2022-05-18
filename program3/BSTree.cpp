@@ -1,3 +1,4 @@
+// https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
 #include "BSTree.h"
 
 BSTree::BSTree() {
@@ -49,27 +50,12 @@ void BSTree::insert(const string &newString) {
     }  
 }
 
+
 void BSTree::remove(const string &key) {
     return;
 }
 
 bool BSTree::search(const string &key) const {
-    // Node* curr = root;
-    // bool found = false;
-
-    // while (curr != nullptr) {
-    //     if (key == curr->data) {
-    //         found = true;
-    //     }
-    //     else if (key < curr->data) {
-    //         curr = curr->left;
-    //     }
-    //     else {
-    //         curr = curr->right;
-    //     }
-    // }
-
-    // return found;
     Node* curr = root;
     return searchTree(curr, key);
 }
@@ -112,7 +98,18 @@ Node* BSTree::searchForNode(Node* curr, const string &key) const {
 }
 
 string BSTree::largest() const {
-    return "";
+    Node* curr = root;
+
+    if (root == nullptr) {
+        return "";
+    }
+
+    while (curr != nullptr) {
+        curr = curr->right;
+    }
+
+    return curr->data;
+
 }
 
 string BSTree::smallest() const {
@@ -125,7 +122,7 @@ int BSTree::height(const string& key) const {
         return -1;
     }
     
-    findDepth(searchForNode(root, key));
+    return findDepth(searchForNode(root, key));
 }
 
 int BSTree::findDepth(Node* node) const
@@ -193,4 +190,37 @@ void BSTree::postOrder() const {
 
 void BSTree::inOrder() const {
     inOrder(root);
+}
+
+//not finished
+Node* BSTree::removeNode(Node* curr, const string &key) const {
+    
+    // if (curr == nullptr) {
+    //     return curr;
+    // }
+
+    // if (key < curr->data) {
+    //     curr->left = removeNode(curr->left, key);
+    // }
+
+    // else if (key > curr->data) {
+    //     curr->right = removeNode(curr->right, key);
+    // }
+
+    // else {
+    //     if (curr->left == nullptr && curr->right == nullptr) {
+    //         return nullptr;
+    //     }
+
+    //     else if (curr->left == nullptr) {
+    //         //Node* temp = curr->right;
+    //         delete curr;
+    //     }
+    //     else if (curr->right == nullptr) {
+    //         //Node* temp = curr->left;
+    //         delete curr;
+    //     }
+        
+    // }
+    return nullptr;
 }
