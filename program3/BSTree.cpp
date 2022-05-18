@@ -125,7 +125,7 @@ int BSTree::height(const string& key) const {
         return -1;
     }
     
-    findDepth(searchForNode(root, key));
+    return findDepth(searchForNode(root, key));
 }
 
 int BSTree::findDepth(Node* node) const
