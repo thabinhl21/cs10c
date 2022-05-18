@@ -113,7 +113,14 @@ string BSTree::largest() const {
 }
 
 string BSTree::smallest() const {
-    return "";
+    Node* curr = root;
+
+    while (curr->left != nullptr)
+    {
+        curr = curr->left;
+    }
+
+    return curr->data;
 }
 
 int BSTree::height(const string& key) const {
@@ -195,32 +202,32 @@ void BSTree::inOrder() const {
 //not finished
 Node* BSTree::removeNode(Node* curr, const string &key) const {
     
-    // if (curr == nullptr) {
-    //     return curr;
-    // }
+    if (curr == nullptr) {
+        return curr;
+    }
 
-    // if (key < curr->data) {
-    //     curr->left = removeNode(curr->left, key);
-    // }
+    if (key < curr->data) {
+        curr->left = removeNode(curr->left, key);
+    }
 
-    // else if (key > curr->data) {
-    //     curr->right = removeNode(curr->right, key);
-    // }
+    else if (key > curr->data) {
+        curr->right = removeNode(curr->right, key);
+    }
 
-    // else {
-    //     if (curr->left == nullptr && curr->right == nullptr) {
-    //         return nullptr;
-    //     }
+    else {
+        if (curr->left == nullptr && curr->right == nullptr) {
+            return nullptr;
+        }
 
-    //     else if (curr->left == nullptr) {
-    //         //Node* temp = curr->right;
-    //         delete curr;
-    //     }
-    //     else if (curr->right == nullptr) {
-    //         //Node* temp = curr->left;
-    //         delete curr;
-    //     }
+        else if (curr->left == nullptr) {
+            Node* temp = curr->right;
+            delete curr;
+        }
+        else if (curr->right == nullptr) {
+            Node* temp = curr->left;
+            delete curr;
+        }
         
-    // }
+    }
     return nullptr;
 }
