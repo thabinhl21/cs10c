@@ -7,7 +7,8 @@
 *  initialize array of lists of WordEntry
 */
 HashTable::HashTable (int s) {
-	
+	size = s;
+    list<WordEntry> table[s];
 }
 
 
