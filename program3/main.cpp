@@ -1,16 +1,19 @@
 #include <iostream>
 #include <limits>
 #include "BSTree.h"
-#include "test_bst.h"
+//#include "test_bst.h"
 using namespace std;
 
 void printOrders(BSTree *tree) {
   cout << "Preorder = ";
   tree->preOrder( );
+  cout << endl;
   cout << "Inorder = ";
   tree->inOrder( );
+  cout << endl;
   cout << "Postorder = ";
   tree->postOrder( );
+  cout << endl;
 }
 
 int menu() {
@@ -56,6 +59,7 @@ int main( ) {
         } else if (choice == 2) {
           cout << "Enter string to remove: ";
           cin >> entry;
+          cout << endl;
           tree.remove(entry);
 
         } else if (choice == 3) {
@@ -65,13 +69,16 @@ int main( ) {
         } else if (choice == 4) {
           cout << "Enter string to search for: ";
           cin >> entry;
+          cout << endl;
           if (tree.search(entry))
           {
-            cout << "String found!";
+            cout << "Found";
+            cout << endl;
           }
           else
           {
-            cout << "String does not exist!";
+            cout << "Not Found";
+            cout << endl;
           }
 
         } else if (choice == 5) {
@@ -85,7 +92,10 @@ int main( ) {
         } else if (choice == 7) {
           cout << "Enter string: ";
           cin >> entry;
+          cout << endl;
+          cout << "Height of subtree rooted at " << entry << ": ";
           cout << tree.height(entry);
+          cout << endl;
         }
         //fix buffer just in case non-numeric choice entered
         choice = menu();
