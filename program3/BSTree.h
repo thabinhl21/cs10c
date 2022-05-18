@@ -64,6 +64,7 @@ class BSTree {
         void preOrder() const;
         void postOrder() const;
         void inOrder() const;
+        bool searchTree(Node* curr, const string &key) const;
 };
 
 #endif // __BSTREE_H__
