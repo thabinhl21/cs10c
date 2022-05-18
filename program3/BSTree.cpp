@@ -104,7 +104,7 @@ string BSTree::largest() const {
         return "";
     }
 
-    while (curr != nullptr) {
+    while (curr->right != nullptr) {
         curr = curr->right;
     }
 
