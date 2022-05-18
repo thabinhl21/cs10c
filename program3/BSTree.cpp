@@ -199,7 +199,7 @@ void BSTree::inOrder() const {
     inOrder(root);
 }
 
-//not finished
+
 Node* BSTree::removeNode(Node* curr, const string &key) const {
     
     if (curr == nullptr) {
@@ -215,7 +215,11 @@ Node* BSTree::removeNode(Node* curr, const string &key) const {
     }
 
     else {
-        if (curr->left == nullptr && curr->right == nullptr) {
+        if (curr->count > 1) {
+            curr->count -= 1;
+        }
+
+        else if (curr->left == nullptr && curr->right == nullptr) {
             return nullptr;
         }
 
@@ -230,4 +234,8 @@ Node* BSTree::removeNode(Node* curr, const string &key) const {
         
     }
     return nullptr;
+}
+
+Node* BSTree::findMinNode(Node* curr) const {
+    
 }

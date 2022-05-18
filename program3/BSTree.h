@@ -10,6 +10,9 @@ class BSTree {
       void postOrder(Node *) const;
       void inOrder(Node *) const;
       int findDepth(Node*) const;
+      bool searchTree(Node* curr, const string &key) const;
+      Node* searchForNode(Node* curr, const string &key) const;
+      Node* removeNode(Node* curr, const string &key) const;
       
     public:
         /* Constructors */
@@ -65,9 +68,6 @@ class BSTree {
         void preOrder() const;
         void postOrder() const;
         void inOrder() const;
-        bool searchTree(Node* curr, const string &key) const;
-        Node* searchForNode(Node* curr, const string &key) const;
-        Node* removeNode(Node* curr, const string &key) const;
 };
 
 #endif // __BSTREE_H__
