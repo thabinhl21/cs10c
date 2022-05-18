@@ -68,8 +68,47 @@ string BSTree::smallest() const {
 
 }
 
-int BSTree::height(const string&) const {
+int BSTree::height(const string& key) const {
+    Node* curr = root;
+    int height = -1;
+    int depth = findDepth(root);
+    
+    if (curr == nullptr) {
+        return -1;
+    }
+    
+    else if (key == curr->data) {
+        return depth;
+    }
+    
+    else if (key < curr->data) {
+        return searchTree(curr->left, key);
+    }
+    
+    else {
+        return searchTree(curr->right, key);
+    }
+}
 
+int BSTree::findDepth(Node* node) const
+{
+    if (node == nullptr)
+    {
+        return -1;
+    }
+    else
+    {
+        int lDepth = findDepth(node->left);
+        int rDepth = findDepth(node->right);
+        if (lDepth > rDepth)
+        {
+            return (lDepth + 1);
+        }
+        else
+        {
+            return (rDepth + 1);
+        }
+    }
 }
 
 void BSTree::preOrder(Node* node) const
@@ -111,11 +150,11 @@ void BSTree::preOrder() const {
 }
 
 void BSTree::postOrder() const {
-
+    postOrder(root);
 }
 
 void BSTree::inOrder() const {
-
+    inOrder(root);
 }
 
 

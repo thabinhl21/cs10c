@@ -9,6 +9,7 @@ class BSTree {
       void preOrder(Node*) const;
       void postOrder(Node *) const;
       void inOrder(Node *) const;
+      int findDepth(Node*) const;
       
     public:
         /* Constructors */
