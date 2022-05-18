@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 #include "BSTree.h"
-#include "test_bst.h"
+//#include "test_bst.h"
 using namespace std;
 
 void printOrders(BSTree *tree) {
@@ -37,7 +37,7 @@ int menu() {
 
 int main( ) {
     // Pass all your tests before running the executable main
-    run_tests();  // TODO: Remove before submitting
+    //run_tests();  // TODO: Remove before submitting
     return 0;
 
     BSTree tree;
