@@ -120,25 +120,12 @@ string BSTree::smallest() const {
 }
 
 int BSTree::height(const string& key) const {
-    Node* curr = root;
-    int height = -1;
-    int depth = findDepth(root);
     
-    if (curr == nullptr) {
+    if (root == nullptr) {
         return -1;
     }
     
-    else if (key == curr->data) {
-        return depth;
-    }
-    
-    else if (key < curr->data) {
-        return searchTree(curr->left, key);
-    }
-    
-    else {
-        return searchTree(curr->right, key);
-    }
+    findDepth(searchForNode(root, key));
 }
 
 int BSTree::findDepth(Node* node) const
@@ -207,6 +194,3 @@ void BSTree::postOrder() const {
 void BSTree::inOrder() const {
     inOrder(root);
 }
-
-
-
