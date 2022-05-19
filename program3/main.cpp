@@ -71,15 +71,14 @@ int main( ) {
           cout << "Enter string to search for: ";
           getline(cin, entry);
           cout << endl;
+          
           if (tree.search(entry))
           {
-            cout << "Found";
-            cout << endl;
+            cout << "Found" << endl;
           }
           else
           {
-            cout << "Not Found";
-            cout << endl;
+            cout << "Not Found" << endl;
           }
 
         } else if (choice == 5) {

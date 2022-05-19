@@ -268,8 +268,6 @@ Node* BSTree::removeNode(Node* curr, const string &key) {
             temp->count = 0;
             curr->left = removeNode(curr->left, temp->data);
         }
-    
-        
     }
     return curr;
 }
