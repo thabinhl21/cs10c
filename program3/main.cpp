@@ -53,12 +53,13 @@ int main( ) {
     
         if (choice == 1) {
           cout << "Enter string to insert: ";
-          cin >> entry;
+          getline(cin, entry);
+          cout << endl;
           tree.insert(entry);
 
         } else if (choice == 2) {
           cout << "Enter string to remove: ";
-          cin >> entry;
+          getline(cin, entry);
           cout << endl;
           tree.remove(entry);
 
@@ -68,7 +69,7 @@ int main( ) {
 
         } else if (choice == 4) {
           cout << "Enter string to search for: ";
-          cin >> entry;
+          getline(cin, entry);
           cout << endl;
           if (tree.search(entry))
           {
@@ -82,20 +83,16 @@ int main( ) {
           }
 
         } else if (choice == 5) {
-          cout << "Smallest: " << endl;
-          cout << tree.smallest();
+          cout << "Smallest: " << tree.smallest() << endl;
 
         } else if (choice == 6) {
-          cout << "Largest: " << endl;
-          cout << tree.largest();
+          cout << "Largest: " << tree.largest() << endl;
 
         } else if (choice == 7) {
           cout << "Enter string: ";
-          cin >> entry;
+          getline(cin, entry);
           cout << endl;
-          cout << "Height of subtree rooted at " << entry << ": ";
-          cout << tree.height(entry);
-          cout << endl;
+          cout << "Height of subtree rooted at " << entry << ": " << tree.height(entry) << endl;
         }
         //fix buffer just in case non-numeric choice entered
         choice = menu();
