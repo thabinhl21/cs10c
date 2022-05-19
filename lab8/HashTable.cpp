@@ -21,15 +21,14 @@ HashTable::HashTable (int s) {
 int HashTable::computeHash(const string &s) {
     int stringHash = 0;
 
-    for (unsigned i = 0; i < s.length(); ++i)
+    for (unsigned i = 0; i < s.length(); ++i) //iterate through characters in string
     {
-        stringHash = (stringHash * 1) + s[i];
-        cout << stringHash << endl;
+        stringHash = stringHash  + s[i]; //for hash value, add string hash value to character value
     }
 
-    if ((stringHash % size) < size)
+    if (stringHash < size) //make sure index is not out of bounds
     {
-        return stringHash % size;
+        return stringHash;
     }
     else
     {
@@ -51,9 +50,9 @@ int HashTable::computeHash(const string &s) {
 *   appropriate array index
 */
 void HashTable::put(const string &s, int score) {
-	 if (contains(s))
+	 if (contains(s)) //check if string is already in table
      {
-         for (WordEntry & entry : hashTable[computeHash(s)])
+         for (WordEntry & entry : hashTable[computeHash(s)]) //range for loop of list at index where string is located - using compute hash to find index where string is
          {
              if (entry.getWord() == s)
              {
@@ -66,8 +65,7 @@ void HashTable::put(const string &s, int score) {
      else
      {
          WordEntry newEntry (s, score);
-         hashTable[computeHash(s)].push_back(newEntry);
-         cout << hashTable[computeHash(s)].front().getWord() << endl;
+         hashTable[computeHash(s)].push_back(newEntry); //push new entry at list based on index found by hash function of string
      }
 }
 
@@ -81,11 +79,11 @@ void HashTable::put(const string &s, int score) {
 */
 
 double HashTable::getAverage(const string &s) {
-    if (contains(s))
+    if (contains(s)) //check if table has string
     {
-        for (WordEntry & entry : hashTable[computeHash(s)])
+        for (WordEntry & entry : hashTable[computeHash(s)]) //range for loop - go to index where string is located and iterate through list to find string
              {
-                 if (entry.getWord() == s)
+                if (entry.getWord() == s)
                 {
                      return entry.getAverage();
                 }
@@ -104,9 +102,9 @@ double HashTable::getAverage(const string &s) {
 *         false if word is not in the hash table
 */
 bool HashTable::contains(const string &s) {
-   if (!hashTable[computeHash(s)].empty())
+   if (!hashTable[computeHash(s)].empty()) //check that table is not empty
    {
-        for (WordEntry & entry : hashTable[computeHash(s)])
+        for (WordEntry & entry : hashTable[computeHash(s)]) //range for loop at list at index from hash value
         {
             if (entry.getWord() == s)
             {
