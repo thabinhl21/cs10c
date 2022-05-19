@@ -1,4 +1,5 @@
 // https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/
+
 #include "BSTree.h"
 
 BSTree::BSTree() {
@@ -202,8 +203,8 @@ void BSTree::remove(const string &key) {
 	removeNode(root, key);
 }
 
-//currently not working for removing internal nodes
-Node* BSTree::removeNode(Node* curr, const string &key) const {
+
+Node* BSTree::removeNode(Node* curr, const string &key) {
    
     if (curr == nullptr) {
         return curr;
@@ -224,56 +225,52 @@ Node* BSTree::removeNode(Node* curr, const string &key) const {
 
         //leaf node
         else if (curr->left == nullptr && curr->right == nullptr) {
-        
-            //cout << "testing1" << endl;
+
+            //only one node in tree
+            if (curr == root) {
+                root = nullptr;
+                return root;
+            }
+
             curr = nullptr;
             return curr;
-            //cout << "testing2" << endl;
         }
+
         //remove node with only right child
         else if (curr->left == nullptr) {
-            //cout << "testing3" << endl;
-            //Node* temp = searchForNode(curr->right, smallest()); smallest value in the right subtree of the node to remove
+            //smallest value in the right subtree of the node to remove
             Node* temp = findMinNode(curr->right);
             curr->data = temp->data;
             curr->count = temp->count;
             temp->count = 0;
 
-            //cout << "testing4" << endl;
             curr->right = removeNode(curr->right, temp->data);
             return curr;
         }
 
         //remove node with only left child
         else if (curr->right == nullptr) {
-            //cout << "testing5" << endl;
-            //Node* temp = searchForNode(curr->left, largest()); // largest value in the left subtree of the node to remove
+            // largest value in the left subtree of the node to remove
             Node* temp = findMaxNode(curr->left);
             curr->data = temp->data;
             curr->count = temp->count;
             temp->count = 0;
 
-            //cout << "testing6" << endl;
             curr->left = removeNode(curr->left, temp->data);
             return curr;
         }
 
         //node with 2 children
         else {
-            //cout << "testing7" << endl;
-            //Node* temp = searchForNode(curr->left, largest());
             Node* temp = findMaxNode(curr->left);
             curr->data = temp->data;
             curr->count = temp->count;
             temp->count = 0;
-            //cout << "testing8" << endl;
             curr->left = removeNode(curr->left, temp->data);
-            //cout << "testing9" << endl;
         }
     
         
     }
-    //cout << "testing10" << endl;
     return curr;
 }
 

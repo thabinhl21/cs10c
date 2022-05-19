@@ -12,7 +12,7 @@ class BSTree {
       int findDepth(Node*) const;
       bool searchTree(Node* curr, const string &key) const;
       Node* searchForNode(Node* curr, const string &key) const;
-      Node* removeNode(Node* curr, const string &key) const;
+      Node* removeNode(Node* curr, const string &key);
       Node* findMinNode(Node* curr) const;
       Node* findMaxNode(Node* curr) const;
       
