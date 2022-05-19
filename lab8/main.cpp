@@ -6,7 +6,7 @@
 using namespace std;
 
 int main() {
-	// declare a few needed variables for inputing the data
+	/*// declare a few needed variables for inputing the data
 	string line;    
 	int score;
 	string message = " ";
@@ -86,7 +86,21 @@ int main() {
 	        }
 	        cout << endl;
 	    }
+	}*/
+
+	/*string test = "test";
+	int score = 3.0;
+	HashTable table(2000);
+
+	cout << ('t' + 'e' + 's' + 't') << endl;
+
+	table.put(test, score);
+
+	if (table.contains(test))
+	{
+		cout << "passed" << endl;
 	}
+	*/
 	
 	return 0;
 }

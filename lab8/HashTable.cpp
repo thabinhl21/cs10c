@@ -8,7 +8,7 @@
 */
 HashTable::HashTable (int s) {
 	size = s;
-    hashTable = new list <WordEntry> [s];
+    hashTable = new list <WordEntry> [size];
 }
 
 
@@ -19,18 +19,26 @@ HashTable::HashTable (int s) {
 *  ensure array index doesn't go out of bounds
 */
 int HashTable::computeHash(const string &s) {
-//test case - first check if string is in table?
-    //list<WordEntry>::iterator it;
+    int stringHash = 0;
 
-    for (unsigned i = 0; i < size; ++i)
+    for (unsigned i = 0; i < s.length(); ++i)
     {
-        for (WordEntry & entry : hashTable[i])
+        stringHash = (stringHash * 1) + s[i];
+        cout << stringHash << endl;
+    }
+
+    if ((stringHash % size) < size)
+    {
+        return stringHash % size;
+    }
+    else
+    {
+        stringHash = stringHash % size;
+        while (stringHash > size)
         {
-            if (entry.getWord() == s)
-            {
-                return i;
-            }
+            stringHash = stringHash % size;
         }
+        return stringHash;
     }
 }
 
@@ -43,7 +51,24 @@ int HashTable::computeHash(const string &s) {
 *   appropriate array index
 */
 void HashTable::put(const string &s, int score) {
-	 
+	 if (contains(s))
+     {
+         for (WordEntry & entry : hashTable[computeHash(s)])
+         {
+             if (entry.getWord() == s)
+             {
+                 entry.addNewAppearance(score);
+                 return;
+             }
+         }
+         return;
+     }
+     else
+     {
+         WordEntry newEntry (s, score);
+         hashTable[computeHash(s)].push_back(newEntry);
+         cout << hashTable[computeHash(s)].front().getWord() << endl;
+     }
 }
 
 /* getAverage
@@ -56,7 +81,21 @@ void HashTable::put(const string &s, int score) {
 */
 
 double HashTable::getAverage(const string &s) {
-
+    if (contains(s))
+    {
+        for (WordEntry & entry : hashTable[computeHash(s)])
+             {
+                 if (entry.getWord() == s)
+                {
+                     return entry.getAverage();
+                }
+            }
+            return 2.0;
+     }
+     else
+     {
+         return 2.0;
+     }
 }
 
 /* contains
@@ -65,6 +104,20 @@ double HashTable::getAverage(const string &s) {
 *         false if word is not in the hash table
 */
 bool HashTable::contains(const string &s) {
+   if (!hashTable[computeHash(s)].empty())
+   {
+        for (WordEntry & entry : hashTable[computeHash(s)])
+        {
+            if (entry.getWord() == s)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    else
+   {
+       return false;
+   }
 }
-
