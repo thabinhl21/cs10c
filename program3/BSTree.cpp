@@ -52,7 +52,7 @@ void BSTree::insert(const string &newString) {
 
 
 void BSTree::remove(const string &key) {
-    return;
+	removeNode(root, key);
 }
 
 bool BSTree::search(const string &key) const {
@@ -203,7 +203,7 @@ void BSTree::inOrder() const {
     inOrder(root);
 }
 
-
+//currently not working for removing the root....
 Node* BSTree::removeNode(Node* curr, const string &key) const {
     
     if (curr == nullptr) {
@@ -224,22 +224,42 @@ Node* BSTree::removeNode(Node* curr, const string &key) const {
         }
 
         else if (curr->left == nullptr && curr->right == nullptr) {
-            return nullptr;
+            delete curr;
+            curr = nullptr;
+            return curr;
         }
 
         else if (curr->left == nullptr) {
-            Node* temp = curr->right;
-            delete curr;
+            Node* temp = searchForNode(curr->right, smallest());
+            curr->data = temp->data;
+            curr->count = temp->count;
+            temp->count = 0;
+
+            curr->right = removeNode(curr->right, temp->data);
+            return curr;
         }
         else if (curr->right == nullptr) {
-            Node* temp = curr->left;
-            delete curr;
+            Node* temp = searchForNode(curr->left, largest());
+            curr->data = temp->data;
+            curr->count = temp->count;
+            temp->count = 0;
+
+            curr->left = removeNode(curr->left, temp->data);
+            return curr;
         }
+        else {
+            Node* temp = searchForNode(curr->left, largest());
+            curr->data = temp->data;
+            curr->count = temp->count;
+            temp->count = 1;
+            curr->left = removeNode(curr->left, temp->data);
+        }
+    
         
     }
-    return nullptr;
+    return curr;
 }
 
-Node* BSTree::findMinNode(Node* curr) const {
-    
-}
+
+
+
