@@ -50,11 +50,6 @@ void BSTree::insert(const string &newString) {
     }  
 }
 
-
-void BSTree::remove(const string &key) {
-	removeNode(root, key);
-}
-
 bool BSTree::search(const string &key) const {
     Node* curr = root;
     return searchTree(curr, key);
@@ -203,9 +198,13 @@ void BSTree::inOrder() const {
     inOrder(root);
 }
 
-//currently not working for removing the root....
+void BSTree::remove(const string &key) {
+	removeNode(root, key);
+}
+
+//currently not working for removing internal nodes
 Node* BSTree::removeNode(Node* curr, const string &key) const {
-    
+   
     if (curr == nullptr) {
         return curr;
     }
@@ -223,40 +222,86 @@ Node* BSTree::removeNode(Node* curr, const string &key) const {
             curr->count -= 1;
         }
 
+        //leaf node
         else if (curr->left == nullptr && curr->right == nullptr) {
-            delete curr;
+        
+            //cout << "testing1" << endl;
             curr = nullptr;
             return curr;
+            //cout << "testing2" << endl;
         }
-
+        //remove node with only right child
         else if (curr->left == nullptr) {
-            Node* temp = searchForNode(curr->right, smallest());
+            //cout << "testing3" << endl;
+            //Node* temp = searchForNode(curr->right, smallest()); smallest value in the right subtree of the node to remove
+            Node* temp = findMinNode(curr->right);
             curr->data = temp->data;
             curr->count = temp->count;
             temp->count = 0;
 
+            //cout << "testing4" << endl;
             curr->right = removeNode(curr->right, temp->data);
             return curr;
         }
+
+        //remove node with only left child
         else if (curr->right == nullptr) {
-            Node* temp = searchForNode(curr->left, largest());
+            //cout << "testing5" << endl;
+            //Node* temp = searchForNode(curr->left, largest()); // largest value in the left subtree of the node to remove
+            Node* temp = findMaxNode(curr->left);
             curr->data = temp->data;
             curr->count = temp->count;
             temp->count = 0;
 
+            //cout << "testing6" << endl;
             curr->left = removeNode(curr->left, temp->data);
             return curr;
         }
+
+        //node with 2 children
         else {
-            Node* temp = searchForNode(curr->left, largest());
+            //cout << "testing7" << endl;
+            //Node* temp = searchForNode(curr->left, largest());
+            Node* temp = findMaxNode(curr->left);
             curr->data = temp->data;
             curr->count = temp->count;
-            temp->count = 1;
+            temp->count = 0;
+            //cout << "testing8" << endl;
             curr->left = removeNode(curr->left, temp->data);
+            //cout << "testing9" << endl;
         }
     
         
     }
+    //cout << "testing10" << endl;
+    return curr;
+}
+
+Node* BSTree::findMinNode(Node* curr) const {
+
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+
+    while (curr->left != nullptr)
+    {
+        curr = curr->left;
+    }
+
+    return curr;
+}
+
+Node* BSTree::findMaxNode(Node* curr) const {
+
+    if (root == nullptr) {
+        return nullptr;
+    }
+
+    while (curr->right != nullptr) {
+        curr = curr->right;
+    }
+
     return curr;
 }
 

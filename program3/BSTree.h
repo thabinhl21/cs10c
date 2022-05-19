@@ -14,6 +14,7 @@ class BSTree {
       Node* searchForNode(Node* curr, const string &key) const;
       Node* removeNode(Node* curr, const string &key) const;
       Node* findMinNode(Node* curr) const;
+      Node* findMaxNode(Node* curr) const;
       
     public:
         /* Constructors */
