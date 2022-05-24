@@ -23,6 +23,26 @@ void fillArrays(int arr1[], int arr2[],int arr3[]){
     }
 }
 
+
+// this function sorts the given array in the range from i to k using quicksort method. In this 
+// function, pivot is the midpoint element (numbers[(i+k)/2])
+void Quicksort_midpoint(int numbers[], int i, int k) {
+    return;
+}
+
+
+//this function utilizes different pivot selection technique in quicksort algorithm. The pivot is the median of 
+//the following three values: leftmost (numbers[i]), midpoint (numbers[(i+k)/2]) and rightmost (numbers[k]). 
+//You should modify the partition function given in section 21.5 to select the pivot using median-of-three technique.
+void Quicksort_medianOfThree(int numbers[], int i, int k) {
+    return;
+}
+
+//this function sorts the given array using InsertionSort method. (implementation of this method is provided in section 21.3).
+void InsertionSort(int numbers[], int numbersSize) {
+    return;
+}
+
 int main() {
 
 
