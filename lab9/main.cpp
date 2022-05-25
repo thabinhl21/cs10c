@@ -32,19 +32,6 @@ void Quicksort_midpoint(int numbers[], int i, int k) {
 //this function utilizes different pivot selection technique in quicksort algorithm. The pivot is the median of 
 //the following three values: leftmost (numbers[i]), midpoint (numbers[(i+k)/2]) and rightmost (numbers[k]). 
 //You should modify the partition function given in section 21.5 to select the pivot using median-of-three technique.
-void Quicksort_medianOfThree(int numbers[], int i, int k) {
-    int j;
-
-    if (i >= k)
-    {
-        return;
-    }
-
-    j = Partition_Three(numbers, i, k);
-
-    Quicksort_medianOfThree(numbers, i, j);
-    Quicksort_medianOfThree(numbers, j+1, k);
-}
 
 int Partition_Three(int numbers[], int i, int k)
 {
@@ -89,6 +76,20 @@ int Partition_Three(int numbers[], int i, int k)
     return h;
 }
 
+void Quicksort_medianOfThree(int numbers[], int i, int k) {
+    int j;
+
+    if (i >= k)
+    {
+        return;
+    }
+
+    j = Partition_Three(numbers, i, k);
+
+    Quicksort_medianOfThree(numbers, i, j);
+    Quicksort_medianOfThree(numbers, j+1, k);
+}
+
 //this function sorts the given array using InsertionSort method. (implementation of this method is provided in section 21.3).
 void InsertionSort(int numbers[], int numbersSize) {
     int i = 0;
@@ -111,6 +112,23 @@ void InsertionSort(int numbers[], int numbersSize) {
 int main() {
 
 
+    clock_t Start = clock();
+    //call sort function here
+    Quicksort_midpoint(arr1, 0, NUMBERS_SIZE);
+    clock_t End = clock();
+    int elapsedTime = (End - Start)/CLOCKS_PER_MS; // converts elapsed time from microseconds to milliseconds.
+    cout << "Quicksort midpoint method runtime: " << elapsedTime << " ms" << endl;
 
+    Start = clock();
+    Quicksort_medianOfThree(arr2, 0, NUMBERS_SIZE);
+    End = clock();
+    elapsedTime = (End - Start) / CLOCKS_PER_MS;
+    cout << "Quicksort median of three runtime: " << elapsedTime << " ms" << endl;
+
+    Start = clock();
+    InsertionSort(arr3, NUMBERS_SIZE);
+    End = clock();
+    elapsedTime = (End - Start) / CLOCKS_PER_MS;
+    cout << "Insertion sort runtime: " << elapsedTime << " ms" << endl;
     return 0;
 }
