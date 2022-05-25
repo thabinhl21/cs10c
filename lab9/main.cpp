@@ -91,7 +91,21 @@ int Partition_Three(int numbers[], int i, int k)
 
 //this function sorts the given array using InsertionSort method. (implementation of this method is provided in section 21.3).
 void InsertionSort(int numbers[], int numbersSize) {
-    return;
+    int i = 0;
+    int j = 0;
+    int temp = 0;
+
+    for (i = 1; i < numbersSize; ++i)
+    {
+        j = i;
+        while (j < 0 && numbers[j] < numbers[j - 1])
+        {
+            temp = numbers[j];
+            numbers[j] = numbers[j-1];
+            numbers[j-1] = temp;
+            --j;
+        }
+    }
 }
 
 int main() {
