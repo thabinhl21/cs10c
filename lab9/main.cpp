@@ -23,10 +23,59 @@ void fillArrays(int arr1[], int arr2[],int arr3[]){
     }
 }
 
+int partition(int numbers[], int i, int k) {
+    int low;
+    int high;
+    int mid;
+    int pivot;
+    int temp;
+    bool done;
+
+    mid = i + (k - i) / 2;
+    pivot = numbers[mid];
+
+    done = false;
+    low = i;
+    high = k;
+
+    while (!done) {
+        while (numbers[low] < pivot) {
+            low += 1;
+        }
+
+        while (pivot < numbers[high]) {
+            high -= 1;
+        }
+
+        if (low >= high) {
+            done = true;
+        }
+        else {
+            temp = numbers[low];
+            numbers[low] = numbers[high];
+            numbers[high] = temp;
+
+            low += 1;
+            high -= 1;
+        }
+    }
+    return high;
+}
+
+
 // this function sorts the given array in the range from i to k using quicksort method. In this 
 // function, pivot is the midpoint element (numbers[(i+k)/2])
 void Quicksort_midpoint(int numbers[], int i, int k) {
-    return;
+    int j;
+
+    if (i >= k) {
+        return;
+    }
+
+    j = partition(numbers, i, k);
+
+    Quicksort_midpoint(numbers, i, j);
+    Quicksort_midpoint(numbers, j+1, k);
 }
 
 //this function utilizes different pivot selection technique in quicksort algorithm. The pivot is the median of 
