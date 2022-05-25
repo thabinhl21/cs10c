@@ -99,7 +99,7 @@ void InsertionSort(int numbers[], int numbersSize) {
     for (i = 1; i < numbersSize; ++i)
     {
         j = i;
-        while (j < 0 && numbers[j] < numbers[j - 1])
+        while (j > 0 && numbers[j] < numbers[j - 1])
         {
             temp = numbers[j];
             numbers[j] = numbers[j-1];
