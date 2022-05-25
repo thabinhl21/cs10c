@@ -111,6 +111,11 @@ void InsertionSort(int numbers[], int numbersSize) {
 
 int main() {
 
+    int arr1[NUMBERS_SIZE];
+    int arr2[NUMBERS_SIZE];
+    int arr3[NUMBERS_SIZE];
+
+    fillArrays(arr1, arr2, arr3);
 
     clock_t Start = clock();
     //call sort function here
