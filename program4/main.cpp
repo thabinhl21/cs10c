@@ -9,7 +9,7 @@ int main() {
     string filename;
     ifstream inFS;
     string word;
-
+    HashTable table;
     cout << "Enter the name of the your file: " << endl;
     cin >> filename;
 
@@ -22,7 +22,7 @@ int main() {
 
     while (inFS >> word) {
     //store words in hash table (vector) as WordEntry objects (HashTable::put - do not need to compute hash!)
-
+        table.put(word, 1);
     }
 
     //WordEntry class

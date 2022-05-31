@@ -6,9 +6,8 @@
 *  set s to be size
 *  initialize array of lists of Token
 */
-HashTable::HashTable (int s) {
-	size = s;
-    hashTable = new list <Token> [size];
+HashTable::HashTable () {
+    vector<Token> hashTable;
 }
 
 
@@ -18,28 +17,28 @@ HashTable::HashTable (int s) {
 *  be sure to use the size of the array to 
 *  ensure array index doesn't go out of bounds
 */
-int HashTable::computeHash(const string &s) {
-    int stringHash = 0;
+// int HashTable::computeHash(const string &s) {
+//     int stringHash = 0;
 
-    for (unsigned i = 0; i < s.length(); ++i) //iterate through characters in string
-    {
-        stringHash = stringHash  + s[i]; //for hash value, add string hash value to character value
-    }
+//     for (unsigned i = 0; i < s.length(); ++i) //iterate through characters in string
+//     {
+//         stringHash = stringHash  + s[i]; //for hash value, add string hash value to character value
+//     }
 
-    if (stringHash < size) //make sure index is not out of bounds
-    {
-        return stringHash;
-    }
-    else
-    {
-        stringHash = stringHash % size;
-        while (stringHash > size)
-        {
-            stringHash = stringHash % size;
-        }
-        return stringHash;
-    }
-}
+//     if (stringHash < size) //make sure index is not out of bounds
+//     {
+//         return stringHash;
+//     }
+//     else
+//     {
+//         stringHash = stringHash % size;
+//         while (stringHash > size)
+//         {
+//             stringHash = stringHash % size;
+//         }
+//         return stringHash;
+//     }
+// }
 
 
 /* put
@@ -52,11 +51,11 @@ int HashTable::computeHash(const string &s) {
 void HashTable::put(const string &s, int score) {
 	 if (contains(s)) //check if string is already in table
      {
-         for (Token & entry : hashTable[computeHash(s)]) //range for loop of list at index where string is located - using compute hash to find index where string is
+         for (unsigned int i = 0; i < hashTable.size(); ++i) //range for loop of list at index where string is located - using compute hash to find index where string is
          {
-             if (entry.getWord() == s)
+             if (hashTable.at(i).getWord() == s)
              {
-                 entry.addNewAppearance(score);
+                 hashTable.at(i).addNewAppearance(score);
                  return;
              }
          }
@@ -65,7 +64,7 @@ void HashTable::put(const string &s, int score) {
      else
      {
          Token newEntry (s, score);
-         hashTable[computeHash(s)].push_back(newEntry); //push new entry at list based on index found by hash function of string
+         hashTable.push_back(newEntry); //push new entry at list based on index found by hash function of string
      }
 }
 
@@ -78,23 +77,23 @@ void HashTable::put(const string &s, int score) {
 *  If not found, return the value 2.0 (neutral result)
 */
 
-double HashTable::getAverage(const string &s) {
-    if (contains(s)) //check if table has string
-    {
-        for (Token & entry : hashTable[computeHash(s)]) //range for loop - go to index where string is located and iterate through list to find string
-             {
-                if (entry.getWord() == s)
-                {
-                     return entry.getAverage();
-                }
-            }
-            return 2.0;
-     }
-     else
-     {
-         return 2.0;
-     }
-}
+// double HashTable::getAverage(const string &s) {
+//     if (contains(s)) //check if table has string
+//     {
+//         for (unsigned int i = 0; i < hashTable.size(); ++i) //range for loop - go to index where string is located and iterate through list to find string
+//              {
+//                 if (hashTable.at(i).getWord() == s)
+//                 {
+//                      return entry.getAverage();
+//                 }
+//             }
+//             return 2.0;
+//      }
+//      else
+//      {
+//          return 2.0;
+//      }
+// }
 
 /* contains
 * input: string word
@@ -102,11 +101,11 @@ double HashTable::getAverage(const string &s) {
 *         false if word is not in the hash table
 */
 bool HashTable::contains(const string &s) {
-   if (!hashTable[computeHash(s)].empty()) //check that table is not empty
+   if (!hashTable.empty()) //check that table is not empty
    {
-        for (Token & entry : hashTable[computeHash(s)]) //range for loop at list at index from hash value
+        for (unsigned int i = 0; i < hashTable.size(); ++i) //range for loop at list at index from hash value
         {
-            if (entry.getWord() == s)
+            if (hashTable.at(i).getWord() == s)
             {
                 return true;
             }

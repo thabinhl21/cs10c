@@ -12,11 +12,11 @@ using namespace std;
 class HashTable {
 
  private:
-	list<Token> *hashTable;
-	int size;
+	vector<Token> hashTable;
+	// int size;
 
  public:
-	HashTable(int);
+	HashTable();
 	bool contains(const string &);
 	double getAverage(const string &);
 	void put(const string &, int);
