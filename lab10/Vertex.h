@@ -16,6 +16,10 @@ public:
   string color;
   Vertex* prev;
   
+  /*
+  A vector containing all of the vertices in the graph. 
+  The start vertex is in the first position in the vector.
+  */
   Vertex():label(""),distance(INT_MAX),color("WHITE"),prev(0){}
   ~Vertex(){}
 };
