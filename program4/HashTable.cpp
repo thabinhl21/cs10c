@@ -1,6 +1,7 @@
 #include "HashTable.h"
 #include "Token.h"
 
+
 /* HashTable constructor
 *  input s is the size of the array
 *  set s to be size
@@ -48,24 +49,20 @@ HashTable::HashTable () {
 *   if not, create a new Entry and push it on the list at the
 *   appropriate array index
 */
-void HashTable::put(const string &s, int score) {
-	 if (contains(s)) //check if string is already in table
+void HashTable::put(const string &s) {
+     if (!hashTable.empty()) //if table is not empty, check for string
      {
-         for (unsigned int i = 0; i < hashTable.size(); ++i) //range for loop of list at index where string is located - using compute hash to find index where string is
+         for (unsigned int i = 0; i < hashTable.size(); ++i)
          {
              if (hashTable.at(i).getWord() == s)
              {
-                 hashTable.at(i).addNewAppearance(score);
+                 hashTable.at(i).addNewAppearance(); //add to numAppearances if string found
                  return;
              }
          }
-         return;
      }
-     else
-     {
-         Token newEntry (s, score);
-         hashTable.push_back(newEntry); //push new entry at list based on index found by hash function of string
-     }
+    Token newEntry (s); //if table not empty or string not found, add new entry to list
+    hashTable.push_back(newEntry);
 }
 
 /* getAverage
@@ -100,10 +97,10 @@ void HashTable::put(const string &s, int score) {
 * output: true if word is in the hash table
 *         false if word is not in the hash table
 */
-bool HashTable::contains(const string &s) {
+/* bool HashTable::contains(const string &s) {
    if (!hashTable.empty()) //check that table is not empty
    {
-        for (unsigned int i = 0; i < hashTable.size(); ++i) //range for loop at list at index from hash value
+        for (unsigned int i = 0; i < hashTable.size(); ++i)
         {
             if (hashTable.at(i).getWord() == s)
             {
@@ -112,9 +109,14 @@ bool HashTable::contains(const string &s) {
         }
         return false;
     }
+} */
 
-    else
-   {
-       return false;
-   }
+Token HashTable::access (int num)
+{
+    return hashTable.at(num);
+}
+
+const int HashTable::vecSize()
+{
+    return hashTable.size();
 }

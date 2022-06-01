@@ -12,11 +12,15 @@ class Token {
  private:
 	string word;
 	int numAppearances;
-	int totalScore;
+	int code;
  public:
-	Token(const string &, int);
-	void addNewAppearance(int);
+	Token(const string &);
+	void addNewAppearance();
 	const string & getWord();
-	double getAverage();
+	int getNumAppearances();
+	void changeNumAppearances(int);
+	void setCode(int num);
+	int getCode();
+	Token& operator=(const Token &rhs);
 };
 #endif

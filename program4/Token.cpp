@@ -6,8 +6,8 @@
 *  note that numAppearances should be set to 1 here
 */
 
-Token::Token(const string &text, int score)
- : word(text), numAppearances(1), totalScore(score) {
+Token::Token(const string &text)
+ : word(text), numAppearances(1), code(0) {
 	 
 }
 
@@ -17,8 +17,7 @@ Token::Token(const string &text, int score)
 * function should increase total score by s
 * also should increase numAppearances
 */
-void Token::addNewAppearance(int s) {
-	totalScore += s;
+void Token::addNewAppearance() {
 	++numAppearances;
 }
 
@@ -38,6 +37,29 @@ const string & Token::getWord() {
 *  note that typecasting -- turning one of the integers
 *  to a double will be necessary to avoid integer division
 */
-double Token::getAverage() {
-	return static_cast<double>(totalScore) / numAppearances;
+int Token::getNumAppearances() {
+	return numAppearances;
+}
+
+void Token::changeNumAppearances(int num)
+{
+	numAppearances = num;
+}
+
+void Token::setCode(int num)
+{
+	code = num;
+}
+
+int Token::getCode()
+{
+	return code;
+}
+
+Token& Token::operator=(const Token &rhs)
+{
+	word = rhs.word;
+	numAppearances = rhs.numAppearances;
+	code = rhs.code;
+	return *this;
 }
