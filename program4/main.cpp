@@ -99,41 +99,74 @@ int main() {
         {
             string sub;
             string punct;
+
+            while (isspace(line.at(0)) && (!line.empty())) //get rid of leading white spaces
+            {
+                line.erase(0, 1);
+
+                if (line.empty()) //if erasing makes line empty, break from loop
+                {
+                    break;
+                }
+            }
             
             len = line.find(" "); //returns index of space
+            //cout << "len: " << len << endl;
 
             if (len < 0 && line.size() > 0) //check if there is word/punctuation left but no more spaces
             {
                 len = line.size(); //if so, set len to size of line
             }
 
-            cout << "len = " << len << endl;
+            //cout << "len = " << len << endl;
         
             if (len > 0)
             {
+                unsigned start = 0;
                 sub = line.substr(0, len); //0 to len characters
-                cout << "sub = " << sub << endl;
-                for (int i = 0; i < len; ++i)
+                //cout << "sub = " << sub << endl;
+
+                if (ispunct(sub.at(0)))
+                {
+                    //cout << "d: " << sub.at(0) << endl;
+                    punct = sub.at(0);
+                    put (table, punct);
+                    start = 1;
+                }
+
+                unsigned i = start;
+                unsigned end = start;
+
+                for ( ; i < sub.size(); ++i)
                 {
                     if (ispunct(sub.at(i)))
                     {
-                        punct = sub.at(i);
-                        cout << "punct " << sub.at(i) << endl;
-                        sub.erase(i, 1);
-                        --len;
-                        put (table, punct);
-                        cout << "i " << i << endl;
+                        if (start < i)
+                        {
+                            //cout << "a: " << sub.substr(start, end - start) << endl;
+                            put(table, sub.substr(start, end - start));
+                        }
+                        //cout << "b: " << sub.substr(i, 1) << endl;
+                        put(table, sub.substr(i, 1));
+                        start = i + 1;
+                        ++end;
+                    }
+                    else
+                    {
+                        ++end;
                     }
                 }
-                
-                while (isspace(line.at(0)) && (!line.empty())) //get rid of any leading white spaces
-                {
-                    line.erase(0, 1);
-                }
 
-                if (sub.size() > 0) //check if sub is greater than 0 - can be 0 if punctuation was only char in sub (was deleted)
+                if (start < sub.size()) //punctuation not at end
                 {
-                    put(table, sub); // insert string
+                    if (sub.size() == 1)
+                    {
+                        put(table, sub.substr(start, 1));
+                    }
+                    else
+                    {
+                        put(table, sub.substr(start, sub.size()));
+                    }
                 }
                 
                 if (len + 1 < line.size())
@@ -145,21 +178,6 @@ int main() {
                 {
                     len = 0;
                 }
-            }
-            
-            else
-            {
-                while (isspace(line.at(0)) && (!line.empty()))
-                {
-                    line.erase(0, 1);
-
-                    if (line.empty()) //if erasing makes line empty, set len to -1 so larger while loop ends and break from this loop
-                    {
-                        len = -1;
-                        break;
-                    }
-                }
-                len = line.size(); //again -- essential!!
             }
         }
     }
@@ -186,7 +204,7 @@ int main() {
 
     reverse(table.begin(), table.end());
 
- /*    for (unsigned i = 0; i < table.size(); ++i)
+  /*  for (unsigned i = 0; i < table.size(); ++i)
     {
         cout << table.at(i).getWord() << " " << table.at(i).getNumAppearances();
         cout << endl;
@@ -219,36 +237,74 @@ int main() {
         {
             string sub;
             string punct;
+
+            while (isspace(line.at(0)) && (!line.empty())) //get rid of leading white spaces
+            {
+                line.erase(0, 1);
+
+                if (line.empty()) //if erasing makes line empty, break from loop
+                {
+                    break;
+                }
+            }
             
             len = line.find(" "); //returns index of space
+            //cout << "len: " << len << endl;
 
             if (len < 0 && line.size() > 0) //check if there is word/punctuation left but no more spaces
             {
                 len = line.size(); //if so, set len to size of line
             }
+
+            //cout << "len = " << len << endl;
         
             if (len > 0)
             {
+                unsigned start = 0;
                 sub = line.substr(0, len); //0 to len characters
-                for (int i = 0; i < sub.size(); ++i)
+                //cout << "sub = " << sub << endl;
+
+                if (ispunct(sub.at(0)))
+                {
+                    //cout << "d: " << sub.at(0) << endl;
+                    punct = sub.at(0);
+                    outFS << Encode (table, punct) << " ";
+                    start = 1;
+                }
+
+                unsigned i = start;
+                unsigned end = start;
+
+                for ( ; i < sub.size(); ++i)
                 {
                     if (ispunct(sub.at(i)))
                     {
-                        punct = sub.at(i);
-                        sub.erase(i, 1);
-                        --len;
-                        outFS << Encode(table, punct) << " ";
+                        if (start < i)
+                        {
+                            //cout << "a: " << sub.substr(start, end - start) << endl;
+                            outFS << Encode (table, sub.substr(start, end - start)) << " ";
+                        }
+                        //cout << "b: " << sub.substr(i, 1) << endl;
+                        outFS << Encode (table, sub.substr(i, 1)) << " ";
+                        start = i + 1;
+                        ++end;
+                    }
+                    else
+                    {
+                        ++end;
                     }
                 }
-                
-                while (isspace(line.at(0)) && (!line.empty())) //get rid of any leading white spaces
-                {
-                    line.erase(0, 1);
-                }
 
-                if (sub.size() > 0) //check if sub is greater than 0 - can be 0 if punctuation was only char in sub (was deleted)
+                if (start < sub.size()) //punctuation not at end
                 {
-                    outFS << Encode(table, sub) << " ";// insert string
+                    if (sub.size() == 1)
+                    {
+                        outFS << Encode (table, sub.substr(start, 1)) << " ";
+                    }
+                    else
+                    {
+                        outFS << Encode (table, sub.substr(start, sub.size())) << " ";
+                    }
                 }
                 
                 if (len + 1 < line.size())
@@ -261,23 +317,10 @@ int main() {
                     len = 0;
                 }
             }
-            
-            else
-            {
-                while (isspace(line.at(0)) && (!line.empty()))
-                {
-                    line.erase(0, 1);
-
-                    if (line.empty()) //if erasing makes line empty, set len to -1 so larger while loop ends and break from this loop
-                    {
-                        len = -1;
-                        break;
-                    }
-                }
-                len = line.size(); //again -- essential!!
-            }
         }
     }
+   
+    
 
     outFS.close();
 
@@ -292,25 +335,6 @@ int main() {
     }
 
     outFS.close();
-
-
-
-    //WordEntry class
-    //string word
-    //int code
-    //int frequency
-
-    //sort vector based on frequency
-    //assign code based on index
-
-    //only using 1 hash table (vector)
     
-    //encode function - input token (string), return associated code (int)
-    //decode function - input code (int), return associated token (string)
-
-    //overwrite file with encoded words
-    //also output decoder (token & code)
-
-
     return 0;
 }
