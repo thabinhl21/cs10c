@@ -68,7 +68,7 @@ string Decode(vector <Token> table, int num)
 
 int main() {    
     // get input from file
-    string filename;
+    string filename = "example.txt"; //TODO: remove hardcoded filename
     ifstream inFS;
     string word;
     vector <Token> table;
@@ -76,7 +76,7 @@ int main() {
     string line = "empty";
 
     cout << "Enter the name of the your file: " << endl;
-    cin >> filename;
+    //cin >> filename; //TODO: remove hardcoded filename
 
     inFS.open(filename);
 
@@ -99,43 +99,67 @@ int main() {
         {
             string sub;
             string punct;
+            
             len = line.find(" "); //returns index of space
 
+            if (len < 0 && line.size() > 0) //check if there is word/punctuation left but no more spaces
+            {
+                len = line.size(); //if so, set len to size of line
+            }
+
             cout << "len = " << len << endl;
-            cout << "line = " << line << endl;
         
             if (len > 0)
             {
                 sub = line.substr(0, len); //0 to len characters
-                for (int i = 0; i < sub.size(); ++i)
+                cout << "sub = " << sub << endl;
+                for (int i = 0; i < len; ++i)
                 {
                     if (ispunct(sub.at(i)))
                     {
                         punct = sub.at(i);
+                        cout << "punct " << sub.at(i) << endl;
                         sub.erase(i, 1);
                         --len;
                         put (table, punct);
+                        cout << "i " << i << endl;
                     }
                 }
-                put(table, sub); // insert string
-
-                if (!line.empty())
+                
+                while (isspace(line.at(0)) && (!line.empty())) //get rid of any leading white spaces
                 {
-                    cout << "change line" << endl;
-                    line = line.substr(len + 1, line.size());
+                    line.erase(0, 1);
                 }
 
+                if (sub.size() > 0) //check if sub is greater than 0 - can be 0 if punctuation was only char in sub (was deleted)
+                {
+                    put(table, sub); // insert string
+                }
+                
+                if (len + 1 < line.size())
+                {
+                    line = line.substr(len + 1, line.size()); //now line is set to everything past what was just put into table
+                    len = line.size(); //not quite sure why this goes here, but it is essential!!
+                }
+                else //if len + 1 is larger than size of line, done reading all words
+                {
+                    len = 0;
+                }
+            }
+            
+            else
+            {
                 while (isspace(line.at(0)) && (!line.empty()))
                 {
-                    cout << "erase start" << endl;
                     line.erase(0, 1);
-                    if (line.empty())
+
+                    if (line.empty()) //if erasing makes line empty, set len to -1 so larger while loop ends and break from this loop
                     {
                         len = -1;
                         break;
                     }
-                    cout << "erase end" << endl;
                 }
+                len = line.size(); //again -- essential!!
             }
         }
     }
@@ -162,15 +186,14 @@ int main() {
 
     reverse(table.begin(), table.end());
 
-    for (unsigned i = 0; i < table.size(); ++i)
+ /*    for (unsigned i = 0; i < table.size(); ++i)
     {
         cout << table.at(i).getWord() << " " << table.at(i).getNumAppearances();
         cout << endl;
-    }
+    } */
 
     for (unsigned i = 0; i < table.size(); ++i)
     {
-        cout << "i: " << i << endl;
         table.at(i).setCode(i);
     }
 
@@ -183,9 +206,77 @@ int main() {
 
     outFS.open("encoded.txt");
 
-    while (inFS >> word) {
-        
+    /* while (inFS >> word) {
         outFS << Encode(table, word) << " ";
+    } */
+
+    while (!inFS.eof())
+    {
+        getline(inFS, line);
+        int len = line.size();
+
+        while(len > 0)
+        {
+            string sub;
+            string punct;
+            
+            len = line.find(" "); //returns index of space
+
+            if (len < 0 && line.size() > 0) //check if there is word/punctuation left but no more spaces
+            {
+                len = line.size(); //if so, set len to size of line
+            }
+        
+            if (len > 0)
+            {
+                sub = line.substr(0, len); //0 to len characters
+                for (int i = 0; i < sub.size(); ++i)
+                {
+                    if (ispunct(sub.at(i)))
+                    {
+                        punct = sub.at(i);
+                        sub.erase(i, 1);
+                        --len;
+                        outFS << Encode(table, punct) << " ";
+                    }
+                }
+                
+                while (isspace(line.at(0)) && (!line.empty())) //get rid of any leading white spaces
+                {
+                    line.erase(0, 1);
+                }
+
+                if (sub.size() > 0) //check if sub is greater than 0 - can be 0 if punctuation was only char in sub (was deleted)
+                {
+                    outFS << Encode(table, sub) << " ";// insert string
+                }
+                
+                if (len + 1 < line.size())
+                {
+                    line = line.substr(len + 1, line.size()); //now line is set to everything past what was just put into table
+                    len = line.size(); //not quite sure why this goes here, but it is essential!!
+                }
+                else //if len + 1 is larger than size of line, done reading all words
+                {
+                    len = 0;
+                }
+            }
+            
+            else
+            {
+                while (isspace(line.at(0)) && (!line.empty()))
+                {
+                    line.erase(0, 1);
+
+                    if (line.empty()) //if erasing makes line empty, set len to -1 so larger while loop ends and break from this loop
+                    {
+                        len = -1;
+                        break;
+                    }
+                }
+                len = line.size(); //again -- essential!!
+            }
+        }
     }
 
     outFS.close();
