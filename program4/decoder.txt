@@ -1,2 +1,4 @@
-0	The
-1	"
+0	I
+1	like
+2	"
+3	cats

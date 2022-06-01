@@ -90,46 +90,71 @@ int main() {
         put(table, word);
     } */
 
-    	while (!inFS.eof()) {
-	    getline(inFS, line);
-	    int len = line.size();
+    while (!inFS.eof())
+    {
+        getline(inFS, line);
+        int len = line.size();
 
-	    while(len > 0) {     // identify all individual strings
-	        string sub;
+        while(len > 0)
+        {
+            string sub;
             string punct;
-	        len = line.find(" "); //returns index of space
+            len = line.find(" "); //returns index of space
 
             cout << "len = " << len << endl;
             cout << "line = " << line << endl;
-            
-	        if (len > 0) {
-	            sub = line.substr(0, len); //0 to len characters
+        
+            if (len > 0)
+            {
+                sub = line.substr(0, len); //0 to len characters
                 for (int i = 0; i < sub.size(); ++i)
                 {
                     if (ispunct(sub.at(i)))
                     {
                         punct = sub.at(i);
-                        cout << "sub before " << sub << endl;
                         sub.erase(i, 1);
-                        cout << "sub after: " << sub << endl;
                         --len;
                         put (table, punct);
                     }
                 }
-                cout << "length " << len << endl;
-                cout << endl;
-	            line = line.substr(len + 1, line.size());
                 put(table, sub); // insert string
-	        }
 
-	        else {
-                if (isspace(line.at(0)))
+                if (!line.empty())
                 {
-                    line.erase(0, 1);
+                    cout << "change line" << endl;
+                    line = line.substr(len + 1, line.size());
                 }
-	        }
-	    }
-	}
+
+                while (isspace(line.at(0)) && (!line.empty()))
+                {
+                    cout << "erase start" << endl;
+                    line.erase(0, 1);
+                    if (line.empty())
+                    {
+                        len = -1;
+                        break;
+                    }
+                    cout << "erase end" << endl;
+                }
+            }
+        }
+    }
+
+	 /*        else
+            {
+                if (!line.empty())
+                {
+                    while (isspace(line.at(0)) && (!line.empty()))
+                {
+                    cout << "erase start" << endl;
+                    line.erase(0, 1);
+                    if (line.empty())
+                    {
+                        break;
+                    }
+                    cout << "erase end" << endl;
+                } */
+            //}
 
     inFS.close();
 
@@ -145,6 +170,7 @@ int main() {
 
     for (unsigned i = 0; i < table.size(); ++i)
     {
+        cout << "i: " << i << endl;
         table.at(i).setCode(i);
     }
 
@@ -157,7 +183,7 @@ int main() {
 
     outFS.open("encoded.txt");
 
-     while (inFS >> word) {
+    while (inFS >> word) {
         
         outFS << Encode(table, word) << " ";
     }
