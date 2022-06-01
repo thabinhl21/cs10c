@@ -1,8 +1,7 @@
-//g++ Token.cpp HashTable.cpp main.cpp -Wall -Werror -o a.out 
+//g++ Token.cpp main.cpp -Wall -Werror -o a.out
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "HashTable.h"
 #include "Token.h"
 #include <algorithm>
 #include <cctype>
@@ -85,11 +84,6 @@ int main() {
         exit(1);
     }
 
-    /* while (inFS >> word) {
-    //store words in hash table (vector) as WordEntry objects (HashTable::put - do not need to compute hash!)
-        put(table, word);
-    } */
-
     while (!inFS.eof())
     {
         getline(inFS, line);
@@ -111,24 +105,19 @@ int main() {
             }
             
             len = line.find(" "); //returns index of space
-            //cout << "len: " << len << endl;
 
             if (len < 0 && line.size() > 0) //check if there is word/punctuation left but no more spaces
             {
                 len = line.size(); //if so, set len to size of line
             }
-
-            //cout << "len = " << len << endl;
         
             if (len > 0)
             {
                 unsigned start = 0;
-                sub = line.substr(0, len); //0 to len characters
-                //cout << "sub = " << sub << endl;
+                sub = line.substr(0, len); //store first word in sub (up to whitespace)
 
-                if (ispunct(sub.at(0)))
+                if (ispunct(sub.at(0))) //if there is punctuation first, store that, then start at 1 rather than 0
                 {
-                    //cout << "d: " << sub.at(0) << endl;
                     punct = sub.at(0);
                     put (table, punct);
                     start = 1;
@@ -137,39 +126,32 @@ int main() {
                 unsigned i = start;
                 unsigned end = start;
 
-                for ( ; i < sub.size(); ++i)
+                for ( ; i < sub.size(); ++i) //don't need to intialize i
+                //iterate through sub, if there is punctuation, output whatever is before it, then output the punctuation
                 {
                     if (ispunct(sub.at(i)))
                     {
                         if (start < i)
                         {
-                            //cout << "a: " << sub.substr(start, end - start) << endl;
-                            put(table, sub.substr(start, end - start));
+                            put(table, sub.substr(start, end - start)); //output everything before punctuation
                         }
-                        //cout << "b: " << sub.substr(i, 1) << endl;
-                        put(table, sub.substr(i, 1));
-                        start = i + 1;
-                        ++end;
+                        put(table, sub.substr(i, 1)); //put in punctuation after that
+                        start = i + 1; //move start to position after punctuation
+                        ++end; //increment end
                     }
                     else
                     {
-                        ++end;
+                        ++end; //increment end if punctuation not found
                     }
                 }
 
-                if (start < sub.size()) //punctuation not at end
+                if (start < sub.size()) //if start < size of sub, then punctuation was not at end and need to output remaining word
                 {
-                    if (sub.size() == 1)
-                    {
-                        put(table, sub.substr(start, 1));
-                    }
-                    else
-                    {
-                        put(table, sub.substr(start, sub.size()));
-                    }
+
+                    put(table, sub.substr(start, sub.size()));
                 }
                 
-                if (len + 1 < line.size())
+                if (len + 1 < line.size()) //check if there are more characters in string past sub
                 {
                     line = line.substr(len + 1, line.size()); //now line is set to everything past what was just put into table
                     len = line.size(); //not quite sure why this goes here, but it is essential!!
@@ -182,33 +164,11 @@ int main() {
         }
     }
 
-	 /*        else
-            {
-                if (!line.empty())
-                {
-                    while (isspace(line.at(0)) && (!line.empty()))
-                {
-                    cout << "erase start" << endl;
-                    line.erase(0, 1);
-                    if (line.empty())
-                    {
-                        break;
-                    }
-                    cout << "erase end" << endl;
-                } */
-            //}
-
     inFS.close();
 
     InsertionSort(table);
 
     reverse(table.begin(), table.end());
-
-  /*  for (unsigned i = 0; i < table.size(); ++i)
-    {
-        cout << table.at(i).getWord() << " " << table.at(i).getNumAppearances();
-        cout << endl;
-    } */
 
     for (unsigned i = 0; i < table.size(); ++i)
     {
@@ -224,10 +184,6 @@ int main() {
 
     outFS.open("encoded.txt");
 
-    /* while (inFS >> word) {
-        outFS << Encode(table, word) << " ";
-    } */
-
     while (!inFS.eof())
     {
         getline(inFS, line);
@@ -238,35 +194,30 @@ int main() {
             string sub;
             string punct;
 
-            while (isspace(line.at(0)) && (!line.empty())) //get rid of leading white spaces
+            while (isspace(line.at(0)) && (!line.empty()))
             {
                 line.erase(0, 1);
 
-                if (line.empty()) //if erasing makes line empty, break from loop
+                if (line.empty())
                 {
                     break;
                 }
             }
             
-            len = line.find(" "); //returns index of space
-            //cout << "len: " << len << endl;
+            len = line.find(" ");
 
-            if (len < 0 && line.size() > 0) //check if there is word/punctuation left but no more spaces
+            if (len < 0 && line.size() > 0)
             {
-                len = line.size(); //if so, set len to size of line
+                len = line.size();
             }
-
-            //cout << "len = " << len << endl;
         
             if (len > 0)
             {
                 unsigned start = 0;
-                sub = line.substr(0, len); //0 to len characters
-                //cout << "sub = " << sub << endl;
+                sub = line.substr(0, len);
 
                 if (ispunct(sub.at(0)))
                 {
-                    //cout << "d: " << sub.at(0) << endl;
                     punct = sub.at(0);
                     outFS << Encode (table, punct) << " ";
                     start = 1;
@@ -281,10 +232,8 @@ int main() {
                     {
                         if (start < i)
                         {
-                            //cout << "a: " << sub.substr(start, end - start) << endl;
                             outFS << Encode (table, sub.substr(start, end - start)) << " ";
                         }
-                        //cout << "b: " << sub.substr(i, 1) << endl;
                         outFS << Encode (table, sub.substr(i, 1)) << " ";
                         start = i + 1;
                         ++end;
@@ -295,33 +244,25 @@ int main() {
                     }
                 }
 
-                if (start < sub.size()) //punctuation not at end
+                if (start < sub.size())
                 {
-                    if (sub.size() == 1)
-                    {
-                        outFS << Encode (table, sub.substr(start, 1)) << " ";
-                    }
-                    else
-                    {
-                        outFS << Encode (table, sub.substr(start, sub.size())) << " ";
-                    }
+                    outFS << Encode (table, sub.substr(start, sub.size())) << " ";
                 }
                 
                 if (len + 1 < line.size())
                 {
-                    line = line.substr(len + 1, line.size()); //now line is set to everything past what was just put into table
-                    len = line.size(); //not quite sure why this goes here, but it is essential!!
+                    line = line.substr(len + 1, line.size());
+                    len = line.size();
                 }
-                else //if len + 1 is larger than size of line, done reading all words
+                else
                 {
                     len = 0;
                 }
             }
         }
+        outFS << endl;
     }
    
-    
-
     outFS.close();
 
     inFS.close();
