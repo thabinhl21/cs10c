@@ -99,13 +99,12 @@ void Graph::bfs() {
             cout << "testing 1" << endl;
             if (vertices.at(v->first).color == "WHITE") {
                 vertices.at(v->first).color = "GRAY";   // gray is discovered, but not expanded
-                vertices.at(v->first).distance = curr->distance + v->second;
+                vertices.at(v->first).distance = v->second + 1;
                 vertices.at(v->first).prev = curr;
                 vQueue.push(&vertices.at(v->first));
             }
             ++v;
         }
         curr->color = "BLACK";  // black is expanded
-        vQueue.pop();
     }
 }
