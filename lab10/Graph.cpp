@@ -1,9 +1,7 @@
 #include "Vertex.h"
 #include "Graph.h"
 
-Graph::Graph() {
-
-}
+Graph::Graph() {}
 
 
 // Reads the graph input file and instantiates a graph object.
@@ -65,8 +63,24 @@ Graph::~Graph() {
 Outputs graph object to a .dot file, then makes a system call that calls dotty on this file. 
 In the dotty file, each node should include vertex label and its distance value.
 */
-void Graph::output_graph(const string &fN) {
-    return;
+void Graph::output_graph(const string &filename) {
+    ofstream outFS(filename.c_str());
+    if (!outFS.is_open()) {
+        cout << "Error" << endl;
+        return;
+    }
+
+    outFS << "digraph G {" << endl;
+    // TO-DO: insert code to display graph here
+
+
+
+    outFS << "}";
+    outFS.close();
+    string jpgFile = filename.substr(0,filename.size()-4) + ".jpg";
+    string command = "dot -Tjpg " + filename + " -o " + jpgFile;
+    system(command.c_str());
+
 }
 
 /*
@@ -96,7 +110,7 @@ void Graph::bfs() {
 
         
         for (list<pair<int, int> >::iterator v = curr->neighbors.begin(); v != curr->neighbors.end();) {
-            cout << "testing 1" << endl;
+            // cout << "testing 1" << endl;
             if (vertices.at(v->first).color == "WHITE") {
                 vertices.at(v->first).color = "GRAY";   // gray is discovered, but not expanded
                 vertices.at(v->first).distance = v->second + 1;
