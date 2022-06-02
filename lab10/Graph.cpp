@@ -48,6 +48,11 @@ Graph::Graph(ifstream &inFS) {
 
     }
 
+    // for testing purposes
+    for (unsigned int i = 0; i < vertices.size(); ++i) {
+        cout << vertices.at(i).label << endl;
+    }
+
 }
 
 Graph::~Graph() {
@@ -60,7 +65,7 @@ Graph::~Graph() {
 Outputs graph object to a .dot file, then makes a system call that calls dotty on this file. 
 In the dotty file, each node should include vertex label and its distance value.
 */
-void Graph::output_graph(const string &) {
+void Graph::output_graph(const string &fN) {
     return;
 }
 
@@ -68,6 +73,39 @@ void Graph::output_graph(const string &) {
 Breadth First Search. Via a BFS traversal, this function should assign each 
 individual vertex's distance to the number of hops that the vertex is from the start vertex.
 */
+
+// algorithm from https://d1b10bmlvqabco.cloudfront.net/attach/ilv1r6m8xjc64o/h7ks2ibk8jg6s3/ioki9sunvh1o/graphs.pdf
 void Graph::bfs() {
-    return;
+
+    for (unsigned int u = 0; u < vertices.size(); ++u) {
+        vertices.at(u).color = "WHITE"; //white is undiscovered
+        vertices.at(u).distance = INT_MAX; //distance from source vertex
+        vertices.at(u).prev = 0; //previous vertex
+    }
+
+    vertices.at(0).color = "GRAY"; 
+    vertices.at(0).distance = 0;
+    vertices.at(0).prev = 0;
+
+    queue<Vertex*> vQueue;
+    vQueue.push(&vertices.at(0));
+
+    while (!vQueue.empty()) {
+        Vertex* curr = vQueue.front();
+        vQueue.pop();
+
+        
+        for (list<pair<int, int> >::iterator v = curr->neighbors.begin(); v != curr->neighbors.end();) {
+            cout << "testing 1" << endl;
+            if (vertices.at(v->first).color == "WHITE") {
+                vertices.at(v->first).color = "GRAY";   // gray is discovered, but not expanded
+                vertices.at(v->first).distance = curr->distance + v->second;
+                vertices.at(v->first).prev = curr;
+                vQueue.push(&vertices.at(v->first));
+            }
+            ++v;
+        }
+        curr->color = "BLACK";  // black is expanded
+        vQueue.pop();
+    }
 }
