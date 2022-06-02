@@ -2,17 +2,58 @@
 #include "Graph.h"
 
 Graph::Graph() {
-    return;
+
 }
 
 
 // Reads the graph input file and instantiates a graph object.
 Graph::Graph(ifstream &inFS) {
-    return;
+    int numNodes;
+    int numEdges;
+    string nodeLabel;
+    string sourceVertex;
+    string sinkVertex;
+    int weight;
+
+    inFS >> numNodes >> numEdges;
+
+    // read in all of the nodes, create a new Vertex object and add it to Graph vector
+    for (int i = 0; i < numNodes; ++i) {
+        inFS >> nodeLabel;
+        Vertex node;
+        node.label = nodeLabel;
+        vertices.push_back(node);
+    }
+
+    int index;
+    int neighborIndex;
+    pair<int,int> pairs;
+
+    for (int i = 0; i < numEdges; ++i) {
+        inFS >> sourceVertex >> sinkVertex >> weight;
+
+
+        for (unsigned int j = 0; j < vertices.size(); ++j) {
+
+            if (vertices.at(j).label == sourceVertex) {
+                index = j;
+            }
+            if (vertices.at(j).label == sinkVertex) {
+                neighborIndex = j;
+            }
+
+        }
+        pairs = make_pair(neighborIndex, weight);
+        vertices.at(index).neighbors.push_back(pairs);
+
+    }
+
 }
 
 Graph::~Graph() {
-    return;
+    while (!vertices.empty()) {
+        vertices.pop_back();
+    }
 }
 
 /*
