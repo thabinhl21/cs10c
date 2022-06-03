@@ -3,7 +3,6 @@
 
 Graph::Graph() {}
 
-
 // Reads the graph input file and instantiates a graph object.
 Graph::Graph(ifstream &inFS) {
     int numNodes;
