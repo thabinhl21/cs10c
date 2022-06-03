@@ -47,9 +47,9 @@ Graph::Graph(ifstream &inFS) {
     }
 
     // for testing purposes
-    for (unsigned int i = 0; i < vertices.size(); ++i) {
-        cout << vertices.at(i).label << endl;
-    }
+    // for (unsigned int i = 0; i < vertices.size(); ++i) {
+    //     cout << vertices.at(i).label << endl;
+    // }
 
 }
 
@@ -64,19 +64,33 @@ Outputs graph object to a .dot file, then makes a system call that calls dotty o
 In the dotty file, each node should include vertex label and its distance value.
 */
 void Graph::output_graph(const string &filename) {
-    ofstream outFS(filename.c_str());
-    if (!outFS.is_open()) {
+    ofstream out(filename.c_str());
+    if (!out.is_open()) {
         cout << "Error" << endl;
         return;
     }
 
-    outFS << "digraph G {" << endl;
-    // TO-DO: insert code to display graph here
+    out << "digraph G {" << endl;
 
+    for (unsigned int i = 0; i < vertices.size(); ++i) {
+        if (vertices.at(i).distance != INT_MAX) {
+            // display vertex (node) annotated with its name and distance from start vertex
+            out << vertices.at(i).label << " [label = " << "\"" << vertices.at(i).label << ", " << vertices.at(i).distance << "\"" << "];" << endl;
+        }
+        if (!vertices.at(i).neighbors.empty()) {
+            // iterate through each vertex's neighbors
+            for (list<pair<int, int> >::iterator j = vertices.at(i).neighbors.begin(); j != vertices.at(i).neighbors.end();) {
+                if (vertices.at(i).distance != INT_MAX) {
+                    // display edge connecting vertex to its neighbor
+                    out << vertices.at(i).label << " -> " << vertices.at(j->first).label << endl;
+                }
+                ++j;
+            }
+        }
+    }
 
-
-    outFS << "}";
-    outFS.close();
+    out << "}";
+    out.close();
     string jpgFile = filename.substr(0,filename.size()-4) + ".jpg";
     string command = "dot -Tjpg " + filename + " -o " + jpgFile;
     system(command.c_str());
@@ -110,10 +124,10 @@ void Graph::bfs() {
 
         
         for (list<pair<int, int> >::iterator v = curr->neighbors.begin(); v != curr->neighbors.end();) {
-            // cout << "testing 1" << endl;
+            // cout << "testing" << endl;
             if (vertices.at(v->first).color == "WHITE") {
                 vertices.at(v->first).color = "GRAY";   // gray is discovered, but not expanded
-                vertices.at(v->first).distance = v->second + 1;
+                vertices.at(v->first).distance = v->second + curr->distance;
                 vertices.at(v->first).prev = curr;
                 vQueue.push(&vertices.at(v->first));
             }
