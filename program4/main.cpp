@@ -67,7 +67,7 @@ string Decode(vector <Token> table, int num)
 
 int main() {    
     // get input from file
-    string filename = "example.txt"; //TODO: remove hardcoded filename
+    string filename;
     ifstream inFS;
     string word;
     vector <Token> table;
@@ -75,7 +75,7 @@ int main() {
     string line = "empty";
 
     cout << "Enter the name of the your file: " << endl;
-    //cin >> filename; //TODO: remove hardcoded filename
+    cin >> filename;
 
     inFS.open(filename);
 
